@@ -56,5 +56,5 @@ When uploading research:
 ## Metadata
 
 - **Collection Period**: 2 years
-- **Last Updated**: 2025-01-24
+- **Last Updated**: 2026-01-24
 - **Contributors**: MASSIVEMAGNETICS team
