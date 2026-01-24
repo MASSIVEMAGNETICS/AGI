@@ -1,0 +1,1050 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognitive Module &mdash; Victor AGI Core 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Utilities Module" href="utils.html" />
+    <link rel="prev" title="Trust Module" href="trust.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Victor AGI Core
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#basic-tensor-operations">Basic Tensor Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#creating-tensors">Creating Tensors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#operations">Operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#automatic-differentiation">Automatic Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#training-a-neural-network">Training a Neural Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#save3-trust-framework">SAVE3 Trust Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#gpu-acceleration">GPU Acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#cognitive-modules">Cognitive Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tensor.html">Tensor Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor-core-tensor-module">Victor Core Tensor Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.data"><code class="docutils literal notranslate"><span class="pre">Tensor.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.grad"><code class="docutils literal notranslate"><span class="pre">Tensor.grad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.requires_grad"><code class="docutils literal notranslate"><span class="pre">Tensor.requires_grad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__init__"><code class="docutils literal notranslate"><span class="pre">Tensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.zero_grad"><code class="docutils literal notranslate"><span class="pre">Tensor.zero_grad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.detach"><code class="docutils literal notranslate"><span class="pre">Tensor.detach()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.numpy"><code class="docutils literal notranslate"><span class="pre">Tensor.numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.item"><code class="docutils literal notranslate"><span class="pre">Tensor.item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__add__"><code class="docutils literal notranslate"><span class="pre">Tensor.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__sub__"><code class="docutils literal notranslate"><span class="pre">Tensor.__sub__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__mul__"><code class="docutils literal notranslate"><span class="pre">Tensor.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__truediv__"><code class="docutils literal notranslate"><span class="pre">Tensor.__truediv__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__neg__"><code class="docutils literal notranslate"><span class="pre">Tensor.__neg__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__pow__"><code class="docutils literal notranslate"><span class="pre">Tensor.__pow__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.pow"><code class="docutils literal notranslate"><span class="pre">Tensor.pow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.matmul"><code class="docutils literal notranslate"><span class="pre">Tensor.matmul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.__matmul__"><code class="docutils literal notranslate"><span class="pre">Tensor.__matmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.sum"><code class="docutils literal notranslate"><span class="pre">Tensor.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.mean"><code class="docutils literal notranslate"><span class="pre">Tensor.mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.reshape"><code class="docutils literal notranslate"><span class="pre">Tensor.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.view"><code class="docutils literal notranslate"><span class="pre">Tensor.view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.transpose"><code class="docutils literal notranslate"><span class="pre">Tensor.transpose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.squeeze"><code class="docutils literal notranslate"><span class="pre">Tensor.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.clip"><code class="docutils literal notranslate"><span class="pre">Tensor.clip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.backward"><code class="docutils literal notranslate"><span class="pre">Tensor.backward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Tensor.jvp"><code class="docutils literal notranslate"><span class="pre">Tensor.jvp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.no_grad"><code class="docutils literal notranslate"><span class="pre">no_grad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.set_grad_enabled"><code class="docutils literal notranslate"><span class="pre">set_grad_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.grad_enabled"><code class="docutils literal notranslate"><span class="pre">grad_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.Optimizer"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Optimizer.__init__"><code class="docutils literal notranslate"><span class="pre">Optimizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Optimizer.zero_grad"><code class="docutils literal notranslate"><span class="pre">Optimizer.zero_grad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Optimizer.step"><code class="docutils literal notranslate"><span class="pre">Optimizer.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.SGD"><code class="docutils literal notranslate"><span class="pre">SGD</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.SGD.__init__"><code class="docutils literal notranslate"><span class="pre">SGD.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.SGD.step"><code class="docutils literal notranslate"><span class="pre">SGD.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.Adam"><code class="docutils literal notranslate"><span class="pre">Adam</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Adam.__init__"><code class="docutils literal notranslate"><span class="pre">Adam.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.Adam.step"><code class="docutils literal notranslate"><span class="pre">Adam.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.RMSprop"><code class="docutils literal notranslate"><span class="pre">RMSprop</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.RMSprop.__init__"><code class="docutils literal notranslate"><span class="pre">RMSprop.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#victor_core.tensor.RMSprop.step"><code class="docutils literal notranslate"><span class="pre">RMSprop.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.relu"><code class="docutils literal notranslate"><span class="pre">relu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.tanh"><code class="docutils literal notranslate"><span class="pre">tanh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.softmax"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.mse_loss"><code class="docutils literal notranslate"><span class="pre">mse_loss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.binary_cross_entropy"><code class="docutils literal notranslate"><span class="pre">binary_cross_entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#victor_core.tensor.cross_entropy"><code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#tensor-class">Tensor Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id0"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#activation-functions">Activation Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id29"><code class="docutils literal notranslate"><span class="pre">relu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id30"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id31"><code class="docutils literal notranslate"><span class="pre">tanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id32"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#loss-functions">Loss Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id33"><code class="docutils literal notranslate"><span class="pre">mse_loss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id34"><code class="docutils literal notranslate"><span class="pre">binary_cross_entropy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id35"><code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#optimizers">Optimizers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id36"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id40"><code class="docutils literal notranslate"><span class="pre">SGD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id43"><code class="docutils literal notranslate"><span class="pre">Adam</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id46"><code class="docutils literal notranslate"><span class="pre">RMSprop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensor.html#context-managers">Context Managers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id49"><code class="docutils literal notranslate"><span class="pre">no_grad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id50"><code class="docutils literal notranslate"><span class="pre">set_grad_enabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensor.html#id51"><code class="docutils literal notranslate"><span class="pre">grad_enabled()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trust.html">Trust Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor-core-trust-module">Victor Core Trust Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.schema"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.schema_version"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.created_at"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.module_id"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.module_name"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.module_version"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.author"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.license"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.license</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.payload_type"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.payload"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.payload_sha256"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_sha256</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.signature_alg"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature_alg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.signature"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id0"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id1"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id2"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id3"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id4"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id5"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id6"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id7"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.license</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id8"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id9"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id10"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_sha256</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id11"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature_alg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id12"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.finalize"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.finalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.verify"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.verify()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.to_dict"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.from_dict"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3Envelope.__init__"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.schema"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.schema_version"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.module_id"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.name"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.version"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.entrypoint"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.entrypoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.provides"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.provides</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.requires"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.requires_versions"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires_versions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.description"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.tags"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id13"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id14"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id15"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id16"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id17"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id18"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.entrypoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id19"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.provides</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id20"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id21"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires_versions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id22"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id23"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.validate"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.validate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.SAVE3ModuleSpec.__init__"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext"><code class="docutils literal notranslate"><span class="pre">LegoContext</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext.__init__"><code class="docutils literal notranslate"><span class="pre">LegoContext.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext.provide"><code class="docutils literal notranslate"><span class="pre">LegoContext.provide()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext.require"><code class="docutils literal notranslate"><span class="pre">LegoContext.require()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext.has_capability"><code class="docutils literal notranslate"><span class="pre">LegoContext.has_capability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext.provider_spec"><code class="docutils literal notranslate"><span class="pre">LegoContext.provider_spec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.LegoContext.list_capabilities"><code class="docutils literal notranslate"><span class="pre">LegoContext.list_capabilities()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta.__init__"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta.record_success"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.record_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta.record_failure"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.record_failure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta.get_trust"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.get_trust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta.get_events"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.get_events()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#victor_core.trust.TrustModelBeta.check_threshold"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.check_threshold()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.discover_specs"><code class="docutils literal notranslate"><span class="pre">discover_specs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.resolve_init_order"><code class="docutils literal notranslate"><span class="pre">resolve_init_order()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.lego_build"><code class="docutils literal notranslate"><span class="pre">lego_build()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.wrap_spec"><code class="docutils literal notranslate"><span class="pre">wrap_spec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.Save3Error"><code class="docutils literal notranslate"><span class="pre">Save3Error</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.SpecError"><code class="docutils literal notranslate"><span class="pre">SpecError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.SignatureError"><code class="docutils literal notranslate"><span class="pre">SignatureError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.DependencyError"><code class="docutils literal notranslate"><span class="pre">DependencyError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#victor_core.trust.TrustError"><code class="docutils literal notranslate"><span class="pre">TrustError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#trust-model">Trust Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id24"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#save3-envelope">SAVE3 Envelope</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id31"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#module-specification">Module Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id63"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#service-registry">Service Registry</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id88"><code class="docutils literal notranslate"><span class="pre">LegoContext</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id95"><code class="docutils literal notranslate"><span class="pre">discover_specs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id96"><code class="docutils literal notranslate"><span class="pre">resolve_init_order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id97"><code class="docutils literal notranslate"><span class="pre">lego_build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id98"><code class="docutils literal notranslate"><span class="pre">wrap_spec()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trust.html#exceptions">Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id99"><code class="docutils literal notranslate"><span class="pre">Save3Error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id100"><code class="docutils literal notranslate"><span class="pre">SpecError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id101"><code class="docutils literal notranslate"><span class="pre">SignatureError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id102"><code class="docutils literal notranslate"><span class="pre">DependencyError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trust.html#id103"><code class="docutils literal notranslate"><span class="pre">TrustError</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cognitive Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#victor-core-cognitive-modules">Victor Core Cognitive Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.__init__"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.add_fact"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.add_fact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.add_rule"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.add_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.has_fact"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.has_fact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.forward_chain"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.forward_chain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.deduce"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.deduce()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.clear"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.get_facts"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.get_facts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.ReasoningEngine.get_rules"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.get_rules()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop.__init__"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop.monitor"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.monitor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop.adjust_strategy"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.adjust_strategy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop.reflect"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.reflect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop.get_current_strategy"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.get_current_strategy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.MetacognitiveLoop.get_performance_summary"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.get_performance_summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#victor_core.cognitive.EmergenceSystem"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.EmergenceSystem.__init__"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.EmergenceSystem.observe"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.observe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.EmergenceSystem.detect_patterns"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.detect_patterns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.EmergenceSystem.get_complexity"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.get_complexity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#victor_core.cognitive.EmergenceSystem.clear"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.clear()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reasoning-engine">Reasoning Engine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#metacognitive-loop">Metacognitive Loop</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#emergence-system">Emergence System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id17"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utilities Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor-core-utilities">Victor Core Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.setup_logger"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.Config.__init__"><code class="docutils literal notranslate"><span class="pre">Config.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.Config.get"><code class="docutils literal notranslate"><span class="pre">Config.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.Config.to_dict"><code class="docutils literal notranslate"><span class="pre">Config.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.Config.load"><code class="docutils literal notranslate"><span class="pre">Config.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.StateManager"><code class="docutils literal notranslate"><span class="pre">StateManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.__init__"><code class="docutils literal notranslate"><span class="pre">StateManager.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.set"><code class="docutils literal notranslate"><span class="pre">StateManager.set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.get"><code class="docutils literal notranslate"><span class="pre">StateManager.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.delete"><code class="docutils literal notranslate"><span class="pre">StateManager.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.checkpoint"><code class="docutils literal notranslate"><span class="pre">StateManager.checkpoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.rollback"><code class="docutils literal notranslate"><span class="pre">StateManager.rollback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.list_checkpoints"><code class="docutils literal notranslate"><span class="pre">StateManager.list_checkpoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.clear"><code class="docutils literal notranslate"><span class="pre">StateManager.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.save"><code class="docutils literal notranslate"><span class="pre">StateManager.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.StateManager.load"><code class="docutils literal notranslate"><span class="pre">StateManager.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.ensure_dir"><code class="docutils literal notranslate"><span class="pre">ensure_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.safe_save_json"><code class="docutils literal notranslate"><span class="pre">safe_save_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.load_json"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#victor_core.utils.Timer.__init__"><code class="docutils literal notranslate"><span class="pre">Timer.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.format_bytes"><code class="docutils literal notranslate"><span class="pre">format_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.format_number"><code class="docutils literal notranslate"><span class="pre">format_number()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#victor_core.utils.deprecated"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#logging">Logging</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id0"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#configuration">Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id1"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#state-management">State Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id7"><code class="docutils literal notranslate"><span class="pre">StateManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#file-i-o">File I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id18"><code class="docutils literal notranslate"><span class="pre">ensure_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id19"><code class="docutils literal notranslate"><span class="pre">safe_save_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id20"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id21"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id22"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#timing">Timing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id23"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#formatting">Formatting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id25"><code class="docutils literal notranslate"><span class="pre">format_bytes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id26"><code class="docutils literal notranslate"><span class="pre">format_number()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#deprecation">Deprecation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#id27"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-modules">Core Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/index.html#available-guides">Available Guides</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#system-architecture-overview">System Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#core-layers">Core Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#design-principles">Design Principles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#modularity">Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#zero-dependencies">Zero Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#production-ready">Production Ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#extensibility">Extensibility</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#data-flow">Data Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#training-pipeline">Training Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#trust-orchestration">Trust Orchestration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#cognitive-processing">Cognitive Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#key-components">Key Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#tensor-engine">Tensor Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#save3-framework">SAVE3 Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#cognitive-architecture">Cognitive Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#performance-characteristics">Performance Characteristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#time-complexity">Time Complexity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#memory-usage">Memory Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#scalability">Scalability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#security-model">Security Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#trust-framework">Trust Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#isolation">Isolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#cryptography">Cryptography</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#extension-points">Extension Points</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#custom-optimizers">Custom Optimizers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#custom-backends">Custom Backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#custom-cognitive-modules">Custom Cognitive Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#future-directions">Future Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#phase-2-current">Phase 2 (Current)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture.html#phase-3-planned">Phase 3 (Planned)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Victor AGI Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Cognitive Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/cognitive.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cognitive-module">
+<h1>Cognitive Module<a class="headerlink" href="#cognitive-module" title="Link to this heading"></a></h1>
+<p>The cognitive module provides reasoning, metacognition, and emergence capabilities.</p>
+<section id="victor-core-cognitive-modules">
+<span id="module-victor_core.cognitive"></span><h2>Victor Core Cognitive Modules<a class="headerlink" href="#victor-core-cognitive-modules" title="Link to this heading"></a></h2>
+<p>Advanced cognitive architectures for reasoning, metacognition, and emergence.</p>
+<p>This module implements production-grade cognitive capabilities including:
+- Logical reasoning and deduction
+- Metacognitive monitoring and adaptation
+- Emergence detection and pattern recognition
+- Knowledge representation and retrieval</p>
+<p>Author: Brandon Emery x Victor
+License: Proprietary - Massive Magnetics</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">victor_core.cognitive.</span></span><span class="sig-name descname"><span class="pre">ReasoningEngine</span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Production-grade reasoning engine with multiple inference methods.</p>
+<p>Supports:
+- Forward chaining (data-driven reasoning)
+- Backward chaining (goal-driven reasoning)
+- Abductive reasoning (inference to best explanation)
+- Probabilistic inference</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span> <span class="o">=</span> <span class="n">ReasoningEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span><span class="o">.</span><span class="n">add_fact</span><span class="p">(</span><span class="n">Fact</span><span class="p">(</span><span class="s2">&quot;human&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Socrates&quot;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span><span class="o">.</span><span class="n">add_rule</span><span class="p">(</span><span class="n">Rule</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">premises</span><span class="o">=</span><span class="p">[</span><span class="n">Fact</span><span class="p">(</span><span class="s2">&quot;human&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">])],</span>
+<span class="gp">... </span>    <span class="n">conclusion</span><span class="o">=</span><span class="n">Fact</span><span class="p">(</span><span class="s2">&quot;mortal&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]),</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mortality_rule&quot;</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">reasoner</span><span class="o">.</span><span class="n">forward_chain</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">conclusion</span><span class="p">)</span>  <span class="c1"># mortal(Socrates)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.add_fact">
+<span class="sig-name descname"><span class="pre">add_fact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Fact</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.add_fact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.add_fact" title="Link to this definition"></a></dt>
+<dd><p>Add a fact to the knowledge base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fact</strong> – Fact to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.add_rule">
+<span class="sig-name descname"><span class="pre">add_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Rule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.add_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.add_rule" title="Link to this definition"></a></dt>
+<dd><p>Add a rule to the knowledge base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> – Rule to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.has_fact">
+<span class="sig-name descname"><span class="pre">has_fact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.has_fact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.has_fact" title="Link to this definition"></a></dt>
+<dd><p>Check if a fact exists in the knowledge base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.forward_chain">
+<span class="sig-name descname"><span class="pre">forward_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ReasoningResult</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.forward_chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.forward_chain" title="Link to this definition"></a></dt>
+<dd><p>Perform forward chaining inference.</p>
+<p>Repeatedly applies rules to derive new facts until no new
+facts can be derived or max_iterations is reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>max_iterations</strong> – Maximum number of iterations</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ReasoningResult with all derived facts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.deduce">
+<span class="sig-name descname"><span class="pre">deduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ReasoningResult</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.deduce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.deduce" title="Link to this definition"></a></dt>
+<dd><p>High-level deduction interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>premises</strong> – List of premise strings (e.g., [“All humans are mortal”, “Socrates is human”])</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ReasoningResult with conclusion</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span> <span class="o">=</span> <span class="n">ReasoningEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">reasoner</span><span class="o">.</span><span class="n">deduce</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="s2">&quot;All humans are mortal&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;Socrates is human&quot;</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">conclusion</span><span class="p">)</span>  <span class="c1"># &quot;Socrates is mortal&quot;</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.clear" title="Link to this definition"></a></dt>
+<dd><p>Clear all facts and rules from the knowledge base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.get_facts">
+<span class="sig-name descname"><span class="pre">get_facts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Fact</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.get_facts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.get_facts" title="Link to this definition"></a></dt>
+<dd><p>Get all facts in the knowledge base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.ReasoningEngine.get_rules">
+<span class="sig-name descname"><span class="pre">get_rules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Rule</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.get_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.ReasoningEngine.get_rules" title="Link to this definition"></a></dt>
+<dd><p>Get all rules in the knowledge base.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">victor_core.cognitive.</span></span><span class="sig-name descname"><span class="pre">MetacognitiveLoop</span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Metacognitive monitoring and adaptation system.</p>
+<p>Monitors system performance, tracks confidence, and dynamically
+adjusts strategies based on task results.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metacog</span> <span class="o">=</span> <span class="n">MetacognitiveLoop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">execute_tasks</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">performance</span> <span class="o">=</span> <span class="n">metacog</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">performance</span><span class="o">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">metacog</span><span class="o">.</span><span class="n">adjust_strategy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metacog</span><span class="o">.</span><span class="n">reflect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop.monitor">
+<span class="sig-name descname"><span class="pre">monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PerformanceMetrics</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.monitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop.monitor" title="Link to this definition"></a></dt>
+<dd><p>Monitor task performance and compute metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>task_results</strong> – Dictionary with task outcomes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PerformanceMetrics object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop.adjust_strategy">
+<span class="sig-name descname"><span class="pre">adjust_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Strategy</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.adjust_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop.adjust_strategy" title="Link to this definition"></a></dt>
+<dd><p>Adjust cognitive strategy based on performance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target_metric</strong> – Specific metric to optimize (accuracy, confidence, latency)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated strategy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop.reflect">
+<span class="sig-name descname"><span class="pre">reflect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.reflect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop.reflect" title="Link to this definition"></a></dt>
+<dd><p>Generate metacognitive reflections on performance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of reflection strings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop.get_current_strategy">
+<span class="sig-name descname"><span class="pre">get_current_strategy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Strategy</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.get_current_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop.get_current_strategy" title="Link to this definition"></a></dt>
+<dd><p>Get current cognitive strategy.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.MetacognitiveLoop.get_performance_summary">
+<span class="sig-name descname"><span class="pre">get_performance_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.get_performance_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.MetacognitiveLoop.get_performance_summary" title="Link to this definition"></a></dt>
+<dd><p>Get summary of performance history.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="victor_core.cognitive.EmergenceSystem">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">victor_core.cognitive.</span></span><span class="sig-name descname"><span class="pre">EmergenceSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.EmergenceSystem" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Emergence detection and analysis system.</p>
+<p>Monitors system states over time to detect emergent behaviors,
+self-organization, and phase transitions.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">emergence</span> <span class="o">=</span> <span class="n">EmergenceSystem</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">system_states</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">emergence</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">patterns</span> <span class="o">=</span> <span class="n">emergence</span><span class="o">.</span><span class="n">detect_patterns</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">patterns</span><span class="p">)</span><span class="si">}</span><span class="s2"> emergent patterns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.EmergenceSystem.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.EmergenceSystem.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.EmergenceSystem.observe">
+<span class="sig-name descname"><span class="pre">observe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.observe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.EmergenceSystem.observe" title="Link to this definition"></a></dt>
+<dd><p>Observe a system state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – Dictionary with system state variables</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.EmergenceSystem.detect_patterns">
+<span class="sig-name descname"><span class="pre">detect_patterns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">EmergentPattern</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.detect_patterns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.EmergenceSystem.detect_patterns" title="Link to this definition"></a></dt>
+<dd><p>Detect emergent patterns in observed states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of detected EmergentPattern objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.EmergenceSystem.get_complexity">
+<span class="sig-name descname"><span class="pre">get_complexity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.get_complexity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.EmergenceSystem.get_complexity" title="Link to this definition"></a></dt>
+<dd><p>Compute system complexity measure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Complexity score (0.0 to 1.0)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="victor_core.cognitive.EmergenceSystem.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#victor_core.cognitive.EmergenceSystem.clear" title="Link to this definition"></a></dt>
+<dd><p>Clear observation history.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="reasoning-engine">
+<h2>Reasoning Engine<a class="headerlink" href="#reasoning-engine" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="id0">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">victor_core.cognitive.</span></span><span class="sig-name descname"><span class="pre">ReasoningEngine</span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Production-grade reasoning engine with multiple inference methods.</p>
+<p>Supports:
+- Forward chaining (data-driven reasoning)
+- Backward chaining (goal-driven reasoning)
+- Abductive reasoning (inference to best explanation)
+- Probabilistic inference</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span> <span class="o">=</span> <span class="n">ReasoningEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span><span class="o">.</span><span class="n">add_fact</span><span class="p">(</span><span class="n">Fact</span><span class="p">(</span><span class="s2">&quot;human&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Socrates&quot;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span><span class="o">.</span><span class="n">add_rule</span><span class="p">(</span><span class="n">Rule</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">premises</span><span class="o">=</span><span class="p">[</span><span class="n">Fact</span><span class="p">(</span><span class="s2">&quot;human&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">])],</span>
+<span class="gp">... </span>    <span class="n">conclusion</span><span class="o">=</span><span class="n">Fact</span><span class="p">(</span><span class="s2">&quot;mortal&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]),</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mortality_rule&quot;</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">reasoner</span><span class="o">.</span><span class="n">forward_chain</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">conclusion</span><span class="p">)</span>  <span class="c1"># mortal(Socrates)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">add_fact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Fact</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.add_fact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Add a fact to the knowledge base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fact</strong> – Fact to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">add_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Rule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.add_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Add a rule to the knowledge base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> – Rule to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">has_fact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.has_fact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Check if a fact exists in the knowledge base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">forward_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ReasoningResult</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.forward_chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Perform forward chaining inference.</p>
+<p>Repeatedly applies rules to derive new facts until no new
+facts can be derived or max_iterations is reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>max_iterations</strong> – Maximum number of iterations</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ReasoningResult with all derived facts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">deduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ReasoningResult</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.deduce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>High-level deduction interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>premises</strong> – List of premise strings (e.g., [“All humans are mortal”, “Socrates is human”])</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ReasoningResult with conclusion</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reasoner</span> <span class="o">=</span> <span class="n">ReasoningEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">reasoner</span><span class="o">.</span><span class="n">deduce</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="s2">&quot;All humans are mortal&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;Socrates is human&quot;</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">conclusion</span><span class="p">)</span>  <span class="c1"># &quot;Socrates is mortal&quot;</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Clear all facts and rules from the knowledge base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">get_facts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Fact</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.get_facts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd><p>Get all facts in the knowledge base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">get_rules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Rule</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/reasoning.html#ReasoningEngine.get_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd><p>Get all rules in the knowledge base.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="metacognitive-loop">
+<h2>Metacognitive Loop<a class="headerlink" href="#metacognitive-loop" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="id10">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">victor_core.cognitive.</span></span><span class="sig-name descname"><span class="pre">MetacognitiveLoop</span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Metacognitive monitoring and adaptation system.</p>
+<p>Monitors system performance, tracks confidence, and dynamically
+adjusts strategies based on task results.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metacog</span> <span class="o">=</span> <span class="n">MetacognitiveLoop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">execute_tasks</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">performance</span> <span class="o">=</span> <span class="n">metacog</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">performance</span><span class="o">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">metacog</span><span class="o">.</span><span class="n">adjust_strategy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metacog</span><span class="o">.</span><span class="n">reflect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PerformanceMetrics</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.monitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd><p>Monitor task performance and compute metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>task_results</strong> – Dictionary with task outcomes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PerformanceMetrics object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">adjust_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Strategy</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.adjust_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd><p>Adjust cognitive strategy based on performance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target_metric</strong> – Specific metric to optimize (accuracy, confidence, latency)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated strategy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">reflect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.reflect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd><p>Generate metacognitive reflections on performance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of reflection strings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">get_current_strategy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Strategy</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.get_current_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd><p>Get current cognitive strategy.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">get_performance_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/metacognition.html#MetacognitiveLoop.get_performance_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd><p>Get summary of performance history.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="emergence-system">
+<h2>Emergence System<a class="headerlink" href="#emergence-system" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="id17">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">victor_core.cognitive.</span></span><span class="sig-name descname"><span class="pre">EmergenceSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Emergence detection and analysis system.</p>
+<p>Monitors system states over time to detect emergent behaviors,
+self-organization, and phase transitions.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">emergence</span> <span class="o">=</span> <span class="n">EmergenceSystem</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">system_states</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">emergence</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">patterns</span> <span class="o">=</span> <span class="n">emergence</span><span class="o">.</span><span class="n">detect_patterns</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">patterns</span><span class="p">)</span><span class="si">}</span><span class="s2"> emergent patterns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id18" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">observe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.observe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id19" title="Link to this definition"></a></dt>
+<dd><p>Observe a system state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – Dictionary with system state variables</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">detect_patterns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">EmergentPattern</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.detect_patterns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id20" title="Link to this definition"></a></dt>
+<dd><p>Detect emergent patterns in observed states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of detected EmergentPattern objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">get_complexity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.get_complexity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id21" title="Link to this definition"></a></dt>
+<dd><p>Compute system complexity measure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Complexity score (0.0 to 1.0)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/victor_core/cognitive/emergence.html#EmergenceSystem.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id22" title="Link to this definition"></a></dt>
+<dd><p>Clear observation history.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="trust.html" class="btn btn-neutral float-left" title="Trust Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="Utilities Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Brandon Emery x Victor.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
