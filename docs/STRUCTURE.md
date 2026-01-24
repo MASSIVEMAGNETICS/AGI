@@ -40,7 +40,7 @@ ai/YYYY-MM-DD-project-name/
 │   ├── training/
 │   └── evaluation/
 ├── data/
-│   └── description.md
+│   └── README.md
 ├── results/
 │   ├── metrics.json
 │   └── visualizations/

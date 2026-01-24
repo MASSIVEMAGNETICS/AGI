@@ -170,7 +170,7 @@ example-project/
 
 ## License
 
-MIT License - See LICENSE file for details
+This project is licensed under the MIT License. Refer to the repository's licensing documentation for details.
 
 ## Acknowledgments
 

@@ -232,7 +232,6 @@ export RFT_NUM_EXPERTS=2
 - `victor_monolith.log`: Detailed execution log
 - `victor_checkpoints/`: Model checkpoints
 - `victor_memory.db`: SQLite memory database
-- `family_learning_real_log.csv`: Metrics log
 
 ## File Structure
 
@@ -269,7 +268,7 @@ export RFT_NUM_EXPERTS=2
 
 Proprietary — Massive Magnetics / Ethica AI / BHeard Network
 
-All rights reserved. This code represents original research and is protected under proprietary license. See LICENSE file for usage terms.
+All rights reserved. This code represents original research and is protected under a proprietary license; contact Massive Magnetics / Ethica AI / BHeard Network for usage terms.
 
 ## Acknowledgments
 

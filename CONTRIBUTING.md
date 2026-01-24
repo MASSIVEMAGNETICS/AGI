@@ -48,7 +48,14 @@ Related work and citations
 {
   "title": "Project Title",
   "date": "YYYY-MM-DD",
-  "authors": ["Author 1", "Author 2"],
+  "authors": [
+    {
+      "name": "Author Name",
+      "role": "Lead Researcher",
+      "email": "author@example.com",
+      "affiliation": "Organization"
+    }
+  ],
   "tags": ["ai", "machine-learning", "nlp"],
   "category": "ai|code|papers|experiments",
   "status": "completed|in-progress|archived",

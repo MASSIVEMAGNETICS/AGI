@@ -156,13 +156,14 @@ Data generation is intended to be reproducible given a fixed configuration. In p
 - Tokenizer (GPT-2)
 - Embedding model (all-MiniLM-L6-v2)
 
-Note: Python enables hash randomization by default and random number generators may be unseeded unless you configure them. For strict, cross-process, bit-for-bit reproducibility you must ensure that `PYTHONHASHSEED` is set to a fixed value and that all RNGs are explicitly seeded in the Victor script.
+Note: The Victor implementation uses SHA-256 hashing for observation generation (stable across processes) but the mock XInterface uses `random.choice()` which may be unseeded. For strict, cross-process, bit-for-bit reproducibility you should seed all RNGs explicitly in the Victor script.
 
-Example invocation:
+To reproduce exactly:
 ```bash
-export PYTHONHASHSEED=0
 export VICTOR_ANCHOR="Bando Empire Architect"
 export VICTOR_DIM=64
+# For strict reproducibility, also set Python hash seed:
+export PYTHONHASHSEED=0
 python code/victor_monolith_v3.2.2-RETRIEVAL-MoE-PC-HIER.py
 ```
 

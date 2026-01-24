@@ -31,7 +31,6 @@ import uuid
 from collections import deque, defaultdict
 from typing import Dict, Any, Optional, List, Tuple
 from transformers import AutoTokenizer
-from datetime import datetime
 from sentence_transformers import SentenceTransformer
 
 # -------------------------------------------------
@@ -1240,8 +1239,8 @@ class VictorMonolith:
         - evolve generation counter
         """
 
-        # 1. transform world -> scalar obs
-        o_t_scalar = (hash(current_prompt) % 100) / 100.0
+        # 1. transform world -> scalar obs (using stable hash for reproducibility)
+        o_t_scalar = (int.from_bytes(hashlib.sha256(current_prompt.encode("utf-8")).digest(), "big") % 100) / 100.0
 
         # 2. consciousness planning / action scoring
         cons_metrics = self.consciousness_loop.step(o_t_scalar)
