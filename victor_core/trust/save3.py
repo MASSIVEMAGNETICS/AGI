@@ -218,12 +218,14 @@ class TrustModelBeta:
             New trust score after update
         """
         current_time = time.time()
-        self._apply_decay(entity_id, current_time)
         
-        # Initialize if new entity
+        # Initialize if new entity (before decay)
         if entity_id not in self._scores:
             self._scores[entity_id] = 50.0  # Start at neutral
             self._events[entity_id] = []
+            self._last_update[entity_id] = current_time
+        
+        self._apply_decay(entity_id, current_time)
         
         # Apply latency penalty if above threshold
         latency_penalty = 0.0
@@ -270,12 +272,14 @@ class TrustModelBeta:
             New trust score after update
         """
         current_time = time.time()
-        self._apply_decay(entity_id, current_time)
         
-        # Initialize if new entity
+        # Initialize if new entity (before decay)
         if entity_id not in self._scores:
             self._scores[entity_id] = 50.0
             self._events[entity_id] = []
+            self._last_update[entity_id] = current_time
+        
+        self._apply_decay(entity_id, current_time)
         
         # Apply penalty
         self._scores[entity_id] -= score_penalty

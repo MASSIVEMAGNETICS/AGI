@@ -30,6 +30,7 @@ from victor_core.trust.save3 import (
     SpecError,
     SignatureError,
     DependencyError,
+    TrustError,
 )
 
 __all__ = [
@@ -45,4 +46,5 @@ __all__ = [
     "SpecError",
     "SignatureError",
     "DependencyError",
+    "TrustError",
 ]
