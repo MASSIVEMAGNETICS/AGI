@@ -124,6 +124,8 @@ For questions or collaboration opportunities:
 
 This research archive represents 2 years of dedicated work in AI and software engineering. Special thanks to all contributors and collaborators.
 
+
+Copyright dev by iambandobandz for massive magnetics 2025
 ---
 
 **Last Updated**: January 2026  
