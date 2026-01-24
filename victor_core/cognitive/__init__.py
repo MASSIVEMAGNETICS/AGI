@@ -1,15 +1,25 @@
 """
-Victor Core Cognitive Module
-=============================
+Victor Core Cognitive Modules
+==============================
 
-Placeholder for cognitive processing modules.
+Advanced cognitive architectures for reasoning, metacognition, and emergence.
 
-This module will contain future implementations of cognitive architectures,
-reasoning systems, and meta-cognitive loops.
+This module implements production-grade cognitive capabilities including:
+- Logical reasoning and deduction
+- Metacognitive monitoring and adaptation
+- Emergence detection and pattern recognition
+- Knowledge representation and retrieval
 
 Author: Brandon Emery x Victor
 License: Proprietary - Massive Magnetics
 """
 
-# Placeholder - cognitive modules to be implemented in future phases
-__all__ = []
+from victor_core.cognitive.reasoning import ReasoningEngine
+from victor_core.cognitive.metacognition import MetacognitiveLoop
+from victor_core.cognitive.emergence import EmergenceSystem
+
+__all__ = [
+    "ReasoningEngine",
+    "MetacognitiveLoop",
+    "EmergenceSystem",
+]
