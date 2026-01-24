@@ -1,0 +1,63 @@
+# Research artifacts
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Data files
+*.csv
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.npy
+*.npz
+
+# Large model files (consider using Git LFS)
+*.pt
+*.pth
+*.ckpt
+*.pb
+*.onnx
+*.tflite
+*.bin
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Log files
+*.log
+logs/
+
+# Experiment outputs (but keep documented results in projects)
+outputs/
+checkpoints/
+wandb/
+mlruns/
+
+# Temporary results (keep permanent results/)
+*.tmp.csv
+*.temp.json
+*_temp/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

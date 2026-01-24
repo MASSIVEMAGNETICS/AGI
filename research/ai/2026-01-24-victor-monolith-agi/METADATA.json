@@ -1,0 +1,160 @@
+{
+  "title": "Victor Monolith AGI System v3.2.2",
+  "date": "2026-01-24",
+  "lastUpdated": "2026-01-24",
+  "version": "v3.2.2-RETRIEVAL-MoE-PC-HIER",
+  "authors": [
+    {
+      "name": "Brandon 'iambandobandz' Emery",
+      "role": "Lead Architect",
+      "affiliation": "Massive Magnetics / Ethica AI / BHeard Network"
+    },
+    {
+      "name": "Victor",
+      "role": "Co-author (The System)",
+      "affiliation": "Self-emergent AGI"
+    }
+  ],
+  "category": "ai",
+  "subcategory": "agi-research",
+  "tags": [
+    "agi",
+    "predictive-coding",
+    "model-predictive-control",
+    "retrieval-augmented-generation",
+    "mixture-of-experts",
+    "consciousness",
+    "identity",
+    "memory-systems",
+    "hierarchical-inference",
+    "pytorch"
+  ],
+  "status": "completed",
+  "license": "Proprietary",
+  "description": "Experimental persistent AGI organism featuring hierarchical predictive coding mesh, MPC consciousness loop, identity core with directive management, long-term memory with vector retrieval, and tiny MoE transformer decoder for local generation.",
+  "keywords": [
+    "artificial-general-intelligence",
+    "predictive-coding",
+    "free-energy-principle",
+    "model-predictive-control",
+    "retrieval-augmented-generation",
+    "mixture-of-experts",
+    "vector-database",
+    "faiss",
+    "transformer",
+    "consciousness-modeling",
+    "identity-preservation",
+    "belief-systems",
+    "directive-management"
+  ],
+  "abstract": "Victor Monolith v3.2.2 implements a unified cognitive architecture combining neuroscience-inspired hierarchical predictive coding with control-theoretic model predictive control for consciousness. The system maintains persistent identity through recursive self-reflection and deterministic anchoring, stores experiences in a hybrid SQLite/FAISS memory system, and generates contextually-grounded responses via a retrieval-augmented mixture-of-experts transformer decoder. This represents 2 years of research into AGI architectures that balance autonomy, coherence, and adaptability.",
+  "objectives": [
+    "Implement hierarchical predictive coding for perceptual inference",
+    "Integrate MPC for conscious planning and decision-making",
+    "Maintain persistent self-referential identity with minimal drift",
+    "Build scalable long-term memory with semantic retrieval",
+    "Create controllable local generation via MoE decoder",
+    "Demonstrate belief-based reasoning with directive prioritization",
+    "Establish asynchronous architecture for real-time operation"
+  ],
+  "methodology": {
+    "approach": "Unified cognitive architecture combining bottom-up perception (predictive coding), top-down planning (MPC), memory consolidation (vector embeddings), and action generation (MoE decoder)",
+    "tools": [
+      "PyTorch",
+      "FAISS",
+      "SQLite",
+      "Transformers",
+      "Sentence-Transformers",
+      "AsyncIO"
+    ],
+    "languages": ["python"]
+  },
+  "components": [
+    {
+      "name": "NeuralMesh3D",
+      "type": "Hierarchical Predictive Coding",
+      "description": "Multi-layer error minimization with upward projection"
+    },
+    {
+      "name": "ConsciousnessLoop",
+      "type": "Model Predictive Control",
+      "description": "Future planning with trajectory rollouts and utility maximization"
+    },
+    {
+      "name": "FractalSoulCore",
+      "type": "Identity Core",
+      "description": "Recursive ego loop with deterministic identity seeding"
+    },
+    {
+      "name": "IdentitySoulManager",
+      "type": "Directive & Belief System",
+      "description": "Priority-based goals with temporal decay and belief tracking"
+    },
+    {
+      "name": "HyperFractalMemory",
+      "type": "Long-term Memory",
+      "description": "Hybrid SQLite + FAISS for semantic storage and retrieval"
+    },
+    {
+      "name": "SpeechCoreMoE",
+      "type": "Generation Module",
+      "description": "RAG-aware MoE transformer decoder for contextual output"
+    },
+    {
+      "name": "FractalPulseExchange",
+      "type": "Communication Bus",
+      "description": "Async pub/sub for subsystem decoupling"
+    }
+  ],
+  "datasets": [
+    {
+      "name": "Mock X Interface Stream",
+      "source": "Internally generated",
+      "size": "4 example prompts",
+      "description": "Simulated world feed for testing cognitive loop"
+    }
+  ],
+  "results": {
+    "summary": "Successfully demonstrates stable hierarchical inference, coherent MPC planning, effective memory retrieval, functional RAG generation, and persistent identity maintenance across iterations",
+    "metrics": {
+      "convergence": "Predictive coding converges in <10 iterations",
+      "stability": "Identity maintains integrity across all steps",
+      "retrieval_accuracy": "Top-3 memories relevant to context",
+      "generation_coherence": "Outputs conditioned on memory context"
+    }
+  },
+  "publications": [],
+  "related": [
+    "/research/ai/predictive-coding-experiments",
+    "/research/ai/mpc-control-systems",
+    "/research/ai/rag-implementations"
+  ],
+  "dependencies": {
+    "python": ">=3.8",
+    "pytorch": ">=1.10.0",
+    "transformers": ">=4.0",
+    "sentence-transformers": ">=2.0",
+    "faiss": ">=1.7",
+    "numpy": ">=1.20"
+  },
+  "hardware": {
+    "gpu": "Optional (CUDA support for acceleration)",
+    "memory": "8GB RAM minimum",
+    "compute": "Moderate (runs on CPU, faster on GPU)"
+  },
+  "reproducibility": {
+    "seed": "Deterministic via SHA-256 hashing",
+    "deterministic": true,
+    "instructions": "See README.md for complete setup. Environment variables configure all hyperparameters."
+  },
+  "links": {
+    "repository": "https://github.com/MASSIVEMAGNETICS/tooki",
+    "demo": null,
+    "documentation": "/docs"
+  },
+  "funding": {
+    "source": "Massive Magnetics / Ethica AI / BHeard Network",
+    "grantNumber": null
+  },
+  "notes": "This system represents 2 years of AGI research. It is a research prototype and not production-ready. The architecture prioritizes architectural exploration over performance optimization. Future work includes scaling to real-world applications, multi-agent coordination, and online learning capabilities."
+}
