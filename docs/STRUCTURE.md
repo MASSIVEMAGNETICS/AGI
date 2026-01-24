@@ -154,8 +154,18 @@ Each project should include a `METADATA.json` file:
   "title": "Human-readable Project Title",
   "date": "YYYY-MM-DD",
   "authors": [
-    "Author Name 1",
-    "Author Name 2"
+    {
+      "name": "Author Name 1",
+      "role": "Lead Researcher",
+      "email": "author1@example.com",
+      "affiliation": "Tooki Research Lab"
+    },
+    {
+      "name": "Author Name 2",
+      "role": "Co-Author",
+      "email": "author2@example.com",
+      "affiliation": "Tooki Research Lab"
+    }
   ],
   "tags": [
     "machine-learning",
