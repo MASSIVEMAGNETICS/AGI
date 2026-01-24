@@ -6,6 +6,7 @@ import pytest
 import numpy as np
 from victor_core.tensor import Tensor
 from victor_core.trust import LegoContext, SAVE3ModuleSpec
+from victor_core.tensor.engine import set_grad_enabled
 
 
 @pytest.fixture
@@ -48,13 +49,10 @@ def sample_module_spec():
 @pytest.fixture(autouse=True)
 def reset_grad_state():
     """Reset gradient tracking state between tests."""
-    from victor_core.tensor.engine import _grad_enabled
-    import victor_core.tensor.engine as engine
-    # Store original state
-    original = engine._grad_enabled
+    # Store and restore original gradient state
+    original = set_grad_enabled(True)
     yield
-    # Restore original state
-    engine._grad_enabled = original
+    set_grad_enabled(original)
 
 
 def approx_equal(a: np.ndarray, b: np.ndarray, rtol: float = 1e-5, atol: float = 1e-7) -> bool:

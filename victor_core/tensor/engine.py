@@ -57,6 +57,27 @@ def grad_enabled() -> bool:
     return _grad_enabled
 
 
+def set_grad_enabled(mode: bool) -> bool:
+    """
+    Set gradient tracking mode globally.
+    
+    Args:
+        mode: True to enable gradient tracking, False to disable
+        
+    Returns:
+        Previous gradient mode
+        
+    Example:
+        >>> prev = set_grad_enabled(False)
+        >>> # ... do some operations without gradients ...
+        >>> set_grad_enabled(prev)  # Restore previous mode
+    """
+    global _grad_enabled
+    prev = _grad_enabled
+    _grad_enabled = mode
+    return prev
+
+
 class Tensor:
     """
     N-dimensional array with automatic differentiation support.
@@ -566,34 +587,38 @@ class Tensor:
                     t._grad_fn = None
     
     # =========================================================================
-    # Forward-mode AD (JVP)
+    # Forward-mode AD (JVP) - Placeholder
     # =========================================================================
     
     def jvp(self, v: Tensor) -> Tensor:
         """
-        Compute Jacobian-Vector Product (forward-mode AD).
+        Compute Jacobian-Vector Product (forward-mode AD) - PLACEHOLDER.
+        
+        **Note**: This is a simplified placeholder implementation. Full JVP
+        support requires dual numbers or similar forward-mode AD infrastructure,
+        which is planned for Phase 2.
         
         Args:
             v: Vector to multiply with Jacobian
             
         Returns:
-            Result of J @ v where J is the Jacobian
+            Approximation of J @ v where J is the Jacobian
             
-        Note:
-            This is a simplified JVP implementation for demonstration.
-            Full implementation would require dual numbers or similar.
+        Warning:
+            This implementation uses numerical differentiation and should not
+            be used in production. It's provided for API completeness only.
+            
+        Example:
+            >>> # For production use, implement proper dual numbers
+            >>> x = Tensor([1.0, 2.0], requires_grad=True)
+            >>> v = Tensor([1.0, 0.0])
+            >>> # result = x.jvp(v)  # Not recommended for actual use
         """
-        # Simplified JVP: numerical approximation
-        eps = 1e-7
-        f_x = self.data
-        x_plus_eps_v = self.data + eps * v.data
-        
-        # Re-evaluate function at x + eps*v (requires function re-execution)
-        # This is a placeholder - full JVP needs dual number support
-        f_x_plus = (Tensor(x_plus_eps_v) + 0).data  # Identity operation
-        
-        jvp_result = (f_x_plus - f_x) / eps
-        return Tensor(jvp_result)
+        raise NotImplementedError(
+            "Full JVP implementation requires dual numbers infrastructure. "
+            "This will be added in Phase 2. For now, use reverse-mode AD "
+            "via .backward() which is fully implemented and production-ready."
+        )
     
     # =========================================================================
     # Representation

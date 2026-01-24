@@ -29,6 +29,8 @@ Example:
 from victor_core.tensor.engine import (
     Tensor,
     no_grad,
+    set_grad_enabled,
+    grad_enabled,
     # Optimizers
     Optimizer,
     SGD,
@@ -48,6 +50,8 @@ from victor_core.tensor.engine import (
 __all__ = [
     "Tensor",
     "no_grad",
+    "set_grad_enabled",
+    "grad_enabled",
     "Optimizer",
     "SGD",
     "Adam", 

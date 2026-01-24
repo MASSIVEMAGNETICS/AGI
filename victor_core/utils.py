@@ -13,6 +13,7 @@ import json
 import pickle
 import logging
 import os
+import warnings
 from pathlib import Path
 from datetime import datetime
 
@@ -379,7 +380,6 @@ def deprecated(message: str):
     """
     def decorator(func):
         def wrapper(*args, **kwargs):
-            import warnings
             warnings.warn(
                 f"{func.__name__} is deprecated. {message}",
                 category=DeprecationWarning,
