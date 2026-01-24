@@ -33,13 +33,15 @@ tooki/
 
 To upload your research:
 
-1. Read the [Contributing Guidelines](./CONTRIBUTING.md)
-2. Follow the [Repository Structure](./docs/STRUCTURE.md)
-3. Use the provided [templates](./docs/)
-4. Submit a pull request
+1. **Quick Start**: Follow the [Quick Start Guide](./docs/QUICK_START.md) for step-by-step instructions
+2. Read the [Contributing Guidelines](./CONTRIBUTING.md)
+3. Follow the [Repository Structure](./docs/STRUCTURE.md)
+4. Use the provided [templates](./docs/)
+5. Submit a pull request
 
 ## 📖 Documentation
 
+- **[Quick Start Guide](./docs/QUICK_START.md)** - Fast-track guide for uploading research
 - **[Contributing Guidelines](./CONTRIBUTING.md)** - How to add research
 - **[Repository Structure](./docs/STRUCTURE.md)** - Detailed organization guide
 - **[Project Template](./docs/PROJECT_TEMPLATE.md)** - Template for new projects
