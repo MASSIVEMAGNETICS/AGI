@@ -481,7 +481,10 @@ class HyperFractalMemory:
         Map FAISS indices -> memory hashes -> summaries.
         I is typically shape [1, k]
         """
-        if I == [] or I is None:
+        if I is None:
+            return []
+        # Handle array-like inputs (e.g., NumPy arrays from FAISS) safely
+        if hasattr(I, "size") and I.size == 0:
             return []
         if isinstance(I, list):
             # nothing indexed yet
