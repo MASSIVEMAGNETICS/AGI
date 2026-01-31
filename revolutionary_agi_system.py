@@ -435,6 +435,32 @@ class AdvancedMemorySystem:
             logger.error(f"Memory retrieval failed: {e}")
             return self.error_manager.handle_error(e, "memory_retrieve").get('entries', [])
     
+    def retrieve_recent(self, k: int = 5, min_importance: float = 0.0) -> List[AGIMemoryEntry]:
+        """Retrieve the k most recent memory entries"""
+        try:
+            with self.lock:
+                # Get all entries and sort by timestamp (most recent first)
+                all_entries = [entry for entry in self.entries.values() 
+                             if entry.importance >= min_importance]
+                
+                # Sort by timestamp descending (newest first)
+                all_entries.sort(key=lambda x: x.timestamp, reverse=True)
+                
+                # Return top k
+                recent_entries = all_entries[:k]
+                
+                # Update access counts
+                current_time = time.time()
+                for entry in recent_entries:
+                    entry.access_count += 1
+                    entry.last_access = current_time
+                
+                return recent_entries
+                
+        except Exception as e:
+            logger.error(f"Recent memory retrieval failed: {e}")
+            return []
+    
     def _auto_prune(self):
         """Automatically remove low-salience entries"""
         try:
@@ -1091,6 +1117,582 @@ class AGIConsciousnessCore:
             'system_health': self.health_monitor.get_system_health(),
             'recent_decisions_count': len(self.decision_log)
         }
+    
+    def generate_inferences(self, input_data: Dict[str, Any], context: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+        """
+        Generate logical inferences from input data and context.
+        
+        This method analyzes input data and generates logical conclusions, 
+        predictions, and insights based on patterns, memory, and reasoning.
+        
+        Args:
+            input_data: The data to analyze and generate inferences from
+            context: Optional context to guide inference generation
+            
+        Returns:
+            List of inference dictionaries with type, content, confidence, and reasoning
+        """
+        try:
+            inferences = []
+            context = context or {}
+            
+            # Extract features for analysis
+            input_vector = self._extract_features(input_data)
+            
+            # Process through neural network for pattern recognition
+            neural_output = self.neural_network.forward(input_vector)
+            
+            # Get attention distribution
+            attention_weights = self.attention_mechanism.update_attention(input_vector)
+            
+            # Inference 1: Pattern-based inference
+            if np.max(neural_output[6:8]) > 0.6:  # Pattern recognition and planning outputs
+                primary_pattern_idx = np.argmax(attention_weights)
+                pattern_strength = float(attention_weights[primary_pattern_idx])
+                
+                inferences.append({
+                    'type': 'pattern_recognition',
+                    'content': f'Detected strong pattern in {self._get_channel_name(primary_pattern_idx)} channel',
+                    'confidence': pattern_strength,
+                    'reasoning': f'Neural pattern recognition activated with {pattern_strength:.2f} confidence',
+                    'supporting_data': {
+                        'channel_index': int(primary_pattern_idx),
+                        'pattern_strength': pattern_strength,
+                        'neural_activation': float(neural_output[6])
+                    }
+                })
+            
+            # Inference 2: Memory-based inference
+            relevant_memories = self.memory_system.retrieve_recent(k=5)
+            if relevant_memories:
+                memory_contexts = [m.context for m in relevant_memories if 'primary_focus' in m.context]
+                if memory_contexts:
+                    common_focuses = {}
+                    for ctx in memory_contexts:
+                        focus = ctx.get('primary_focus', 'unknown')
+                        common_focuses[focus] = common_focuses.get(focus, 0) + 1
+                    
+                    most_common = max(common_focuses.items(), key=lambda x: x[1])
+                    memory_confidence = min(1.0, most_common[1] / len(memory_contexts))
+                    
+                    inferences.append({
+                        'type': 'memory_recall',
+                        'content': f'Recent experiences suggest focus on {most_common[0]}',
+                        'confidence': memory_confidence,
+                        'reasoning': f'Found {most_common[1]} similar experiences in recent memory',
+                        'supporting_data': {
+                            'common_focus': most_common[0],
+                            'occurrence_count': most_common[1],
+                            'total_memories': len(memory_contexts)
+                        }
+                    })
+            
+            # Inference 3: Causal inference based on state transitions
+            if len(self.processing_history) >= 2:
+                prev_event = self.processing_history[-1]
+                prev_awareness = prev_event['response'].get('awareness_response', {})
+                prev_intensity = prev_awareness.get('input_intensity', 0.5)
+                current_intensity = float(np.mean(input_vector))
+                
+                intensity_change = current_intensity - prev_intensity
+                if abs(intensity_change) > 0.2:
+                    direction = 'increased' if intensity_change > 0 else 'decreased'
+                    
+                    inferences.append({
+                        'type': 'causal_relationship',
+                        'content': f'Input intensity {direction} significantly from previous state',
+                        'confidence': min(1.0, abs(intensity_change)),
+                        'reasoning': f'Detected {abs(intensity_change):.2f} change in input intensity',
+                        'supporting_data': {
+                            'previous_intensity': prev_intensity,
+                            'current_intensity': current_intensity,
+                            'change': intensity_change,
+                            'direction': direction
+                        }
+                    })
+            
+            # Inference 4: Goal-oriented inference
+            if context.get('goals'):
+                goals = context['goals']
+                goal_alignment = self._assess_goal_alignment(input_data, goals, neural_output)
+                
+                for goal, alignment_score in goal_alignment.items():
+                    if alignment_score > 0.5:
+                        inferences.append({
+                            'type': 'goal_progress',
+                            'content': f'Current input aligns with goal: {goal}',
+                            'confidence': alignment_score,
+                            'reasoning': f'Goal alignment score: {alignment_score:.2f}',
+                            'supporting_data': {
+                                'goal': goal,
+                                'alignment_score': alignment_score
+                            }
+                        })
+            
+            # Inference 5: Predictive inference
+            if neural_output[7] > 0.6:  # Planning neuron active
+                prediction_confidence = float(neural_output[7])
+                
+                inferences.append({
+                    'type': 'prediction',
+                    'content': 'System anticipates need for planning or decision-making',
+                    'confidence': prediction_confidence,
+                    'reasoning': f'Planning neural pathway activated at {prediction_confidence:.2f}',
+                    'supporting_data': {
+                        'planning_activation': prediction_confidence,
+                        'intention_strength': self.intention_strength
+                    }
+                })
+            
+            # Inference 6: Coherence-based inference (always generated)
+            coherence_check = self._check_input_coherence(input_vector, neural_output)
+            inferences.append({
+                'type': 'coherence_assessment',
+                'content': coherence_check['message'],
+                'confidence': coherence_check['score'],
+                'reasoning': coherence_check['reasoning'],
+                'supporting_data': coherence_check['data']
+            })
+            
+            # Inference 7: Basic input analysis (always generated as fallback)
+            if len(inferences) == 1:  # Only coherence inference so far
+                input_intensity = float(np.mean(input_vector))
+                primary_channel_idx = np.argmax(input_vector)
+                
+                inferences.append({
+                    'type': 'input_analysis',
+                    'content': f'Primary input detected in {self._get_channel_name(primary_channel_idx)} channel with intensity {input_intensity:.2f}',
+                    'confidence': min(1.0, input_intensity + 0.3),
+                    'reasoning': f'Analyzed input vector with mean intensity {input_intensity:.2f}',
+                    'supporting_data': {
+                        'input_intensity': input_intensity,
+                        'primary_channel': int(primary_channel_idx),
+                        'channel_name': self._get_channel_name(primary_channel_idx),
+                        'attention_focus': float(attention_weights[primary_channel_idx])
+                    }
+                })
+            
+            # Log inference generation
+            logger.info(f"Generated {len(inferences)} inferences from input data")
+            
+            return inferences
+            
+        except Exception as e:
+            logger.error(f"Inference generation failed: {e}")
+            return [{
+                'type': 'error',
+                'content': 'Failed to generate inferences',
+                'confidence': 0.0,
+                'reasoning': str(e),
+                'supporting_data': {}
+            }]
+    
+    def process_directive(self, directive: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
+        """
+        Process a directive and generate an action plan.
+        
+        This method interprets directives, breaks them down into actionable steps,
+        and generates a comprehensive execution plan.
+        
+        Args:
+            directive: The directive/command to process
+            context: Optional context about the directive (source, priority, constraints)
+            
+        Returns:
+            Dictionary containing parsed directive, action plan, and execution strategy
+        """
+        try:
+            context = context or {}
+            timestamp = time.time()
+            
+            # Parse directive to understand intent and requirements
+            parsed = self._parse_directive(directive, context)
+            
+            # Generate inferences about the directive
+            directive_data = {
+                'cognitive': 0.9,  # High cognitive load for directive processing
+                'intention': 0.8,  # Strong intention signal
+                'emotional': context.get('urgency', 0.5)
+            }
+            
+            inferences = self.generate_inferences(directive_data, {
+                'goals': [parsed['primary_goal']],
+                'directive': directive
+            })
+            
+            # Generate action plan based on directive type
+            action_plan = self._generate_action_plan(parsed, inferences, context)
+            
+            # Prioritize actions
+            prioritized_actions = self._prioritize_actions(action_plan['actions'], context)
+            
+            # Assess execution feasibility
+            feasibility = self._assess_execution_feasibility(prioritized_actions, context)
+            
+            # Log directive processing
+            decision_record = {
+                'timestamp': timestamp,
+                'directive': directive,
+                'parsed_intent': parsed['intent_type'],
+                'action_count': len(prioritized_actions),
+                'feasibility_score': feasibility['overall_score']
+            }
+            self.decision_log.append(decision_record)
+            
+            # Generate response
+            response = {
+                'directive': directive,
+                'understood': parsed['understood'],
+                'intent': parsed['intent_type'],
+                'primary_goal': parsed['primary_goal'],
+                'sub_goals': parsed['sub_goals'],
+                'action_plan': {
+                    'actions': prioritized_actions,
+                    'total_steps': len(prioritized_actions),
+                    'estimated_complexity': action_plan['complexity'],
+                    'dependencies': action_plan['dependencies']
+                },
+                'inferences': inferences,
+                'feasibility': feasibility,
+                'execution_strategy': self._create_execution_strategy(prioritized_actions, feasibility),
+                'confidence': parsed['confidence'],
+                'timestamp': timestamp,
+                'consciousness_state': {
+                    'awareness_level': self.awareness_level,
+                    'intention_strength': self.intention_strength,
+                    'cognitive_coherence': self.cognitive_coherence
+                }
+            }
+            
+            logger.info(f"Processed directive: '{directive}' -> {len(prioritized_actions)} actions planned")
+            
+            return response
+            
+        except Exception as e:
+            logger.error(f"Directive processing failed: {e}")
+            return {
+                'directive': directive,
+                'understood': False,
+                'error': str(e),
+                'action_plan': {'actions': [], 'total_steps': 0},
+                'confidence': 0.0
+            }
+    
+    def _get_channel_name(self, channel_idx: int) -> str:
+        """Get human-readable name for sensory channel"""
+        names = ['Visual', 'Auditory', 'Tactile', 'Emotional', 'Cognitive', 
+                'Memory', 'Intention', 'Environmental']
+        return names[channel_idx] if channel_idx < len(names) else 'Unknown'
+    
+    def _assess_goal_alignment(self, input_data: Dict[str, Any], goals: List[str], 
+                              neural_output: np.ndarray) -> Dict[str, float]:
+        """Assess how well current input aligns with stated goals"""
+        alignment = {}
+        
+        for goal in goals:
+            # Simple keyword matching for alignment (in production, use more sophisticated NLP)
+            goal_lower = goal.lower()
+            score = 0.5  # Base score
+            
+            # Check if input data mentions the goal
+            for key, value in input_data.items():
+                if isinstance(value, str) and goal_lower in value.lower():
+                    score += 0.3
+                elif isinstance(value, dict):
+                    for v in value.values():
+                        if isinstance(v, str) and goal_lower in v.lower():
+                            score += 0.2
+            
+            # Factor in neural network decision-making activation
+            if neural_output[3] > 0.5:  # Decision making active
+                score += 0.2
+            
+            alignment[goal] = min(1.0, score)
+        
+        return alignment
+    
+    def _check_input_coherence(self, input_vector: np.ndarray, 
+                               neural_output: np.ndarray) -> Dict[str, Any]:
+        """Check if input is coherent and internally consistent"""
+        variance = np.var(input_vector)
+        mean_activation = np.mean(neural_output)
+        std_activation = np.std(neural_output)
+        
+        # Low variance + moderate mean = coherent input
+        coherence_score = 1.0 - min(1.0, variance)
+        coherence_score *= (1.0 - abs(0.5 - mean_activation))  # Penalize extreme means
+        
+        is_coherent = coherence_score > 0.5 and std_activation < 0.4
+        
+        return {
+            'is_coherent': is_coherent,
+            'score': float(coherence_score),
+            'message': 'Input shows high internal coherence' if is_coherent else 'Input appears fragmented',
+            'reasoning': f'Coherence score: {coherence_score:.2f}, activation std: {std_activation:.2f}',
+            'data': {
+                'input_variance': float(variance),
+                'mean_activation': float(mean_activation),
+                'std_activation': float(std_activation),
+                'coherence_score': float(coherence_score)
+            }
+        }
+    
+    def _parse_directive(self, directive: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Parse directive to extract intent and requirements"""
+        directive_lower = directive.lower()
+        
+        # Determine intent type based on keywords
+        intent_type = 'unknown'
+        confidence = 0.5
+        
+        if any(word in directive_lower for word in ['analyze', 'examine', 'investigate', 'study']):
+            intent_type = 'analysis'
+            confidence = 0.8
+        elif any(word in directive_lower for word in ['create', 'generate', 'build', 'make']):
+            intent_type = 'creation'
+            confidence = 0.8
+        elif any(word in directive_lower for word in ['find', 'search', 'locate', 'discover']):
+            intent_type = 'search'
+            confidence = 0.8
+        elif any(word in directive_lower for word in ['optimize', 'improve', 'enhance', 'refine']):
+            intent_type = 'optimization'
+            confidence = 0.8
+        elif any(word in directive_lower for word in ['explain', 'describe', 'clarify']):
+            intent_type = 'explanation'
+            confidence = 0.8
+        elif any(word in directive_lower for word in ['decide', 'choose', 'select']):
+            intent_type = 'decision'
+            confidence = 0.8
+        elif any(word in directive_lower for word in ['plan', 'schedule', 'organize']):
+            intent_type = 'planning'
+            confidence = 0.9
+        else:
+            # Default to general processing
+            intent_type = 'general_processing'
+            confidence = 0.6
+        
+        # Extract primary goal (simplified - first sentence or full directive if short)
+        sentences = directive.split('.')
+        primary_goal = sentences[0].strip() if sentences else directive
+        
+        # Extract sub-goals (remaining sentences)
+        sub_goals = [s.strip() for s in sentences[1:] if s.strip()]
+        
+        return {
+            'understood': True,
+            'intent_type': intent_type,
+            'primary_goal': primary_goal,
+            'sub_goals': sub_goals,
+            'confidence': confidence,
+            'priority': context.get('priority', 'normal'),
+            'constraints': context.get('constraints', [])
+        }
+    
+    def _generate_action_plan(self, parsed: Dict[str, Any], 
+                             inferences: List[Dict[str, Any]], 
+                             context: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate detailed action plan from parsed directive"""
+        intent_type = parsed['intent_type']
+        actions = []
+        dependencies = []
+        
+        # Generate actions based on intent type
+        if intent_type == 'analysis':
+            actions = [
+                {'step': 1, 'action': 'Gather relevant data', 'type': 'data_collection'},
+                {'step': 2, 'action': 'Process data through analysis pipeline', 'type': 'processing'},
+                {'step': 3, 'action': 'Generate insights and patterns', 'type': 'synthesis'},
+                {'step': 4, 'action': 'Formulate conclusions', 'type': 'conclusion'}
+            ]
+            dependencies = [{'step': 2, 'depends_on': [1]}, {'step': 3, 'depends_on': [2]}, 
+                          {'step': 4, 'depends_on': [3]}]
+            
+        elif intent_type == 'creation':
+            actions = [
+                {'step': 1, 'action': 'Define requirements and specifications', 'type': 'planning'},
+                {'step': 2, 'action': 'Design architecture/structure', 'type': 'design'},
+                {'step': 3, 'action': 'Implement/build components', 'type': 'implementation'},
+                {'step': 4, 'action': 'Validate and refine', 'type': 'validation'}
+            ]
+            dependencies = [{'step': 2, 'depends_on': [1]}, {'step': 3, 'depends_on': [2]}, 
+                          {'step': 4, 'depends_on': [3]}]
+            
+        elif intent_type == 'search':
+            actions = [
+                {'step': 1, 'action': 'Define search criteria', 'type': 'preparation'},
+                {'step': 2, 'action': 'Query relevant data sources', 'type': 'execution'},
+                {'step': 3, 'action': 'Filter and rank results', 'type': 'processing'},
+                {'step': 4, 'action': 'Present findings', 'type': 'reporting'}
+            ]
+            dependencies = [{'step': 2, 'depends_on': [1]}, {'step': 3, 'depends_on': [2]}, 
+                          {'step': 4, 'depends_on': [3]}]
+            
+        elif intent_type == 'optimization':
+            actions = [
+                {'step': 1, 'action': 'Baseline current performance', 'type': 'measurement'},
+                {'step': 2, 'action': 'Identify optimization opportunities', 'type': 'analysis'},
+                {'step': 3, 'action': 'Apply optimizations', 'type': 'implementation'},
+                {'step': 4, 'action': 'Measure improvements', 'type': 'validation'}
+            ]
+            dependencies = [{'step': 2, 'depends_on': [1]}, {'step': 3, 'depends_on': [2]}, 
+                          {'step': 4, 'depends_on': [3]}]
+            
+        elif intent_type == 'planning':
+            actions = [
+                {'step': 1, 'action': 'Identify goals and constraints', 'type': 'scoping'},
+                {'step': 2, 'action': 'Break down into manageable tasks', 'type': 'decomposition'},
+                {'step': 3, 'action': 'Sequence tasks and allocate resources', 'type': 'scheduling'},
+                {'step': 4, 'action': 'Create contingency plans', 'type': 'risk_management'}
+            ]
+            dependencies = [{'step': 2, 'depends_on': [1]}, {'step': 3, 'depends_on': [2]}, 
+                          {'step': 4, 'depends_on': [3]}]
+            
+        else:  # general_processing, explanation, decision, or unknown
+            actions = [
+                {'step': 1, 'action': 'Understand the request', 'type': 'comprehension'},
+                {'step': 2, 'action': 'Process relevant information', 'type': 'processing'},
+                {'step': 3, 'action': 'Generate response', 'type': 'synthesis'}
+            ]
+            dependencies = [{'step': 2, 'depends_on': [1]}, {'step': 3, 'depends_on': [2]}]
+        
+        # Add sub-goal actions if any
+        if parsed['sub_goals']:
+            for i, sub_goal in enumerate(parsed['sub_goals'][:3]):  # Limit to 3 sub-goals
+                actions.append({
+                    'step': len(actions) + 1,
+                    'action': f'Address sub-goal: {sub_goal}',
+                    'type': 'sub_goal'
+                })
+        
+        # Calculate complexity
+        complexity = len(actions) + len(dependencies) * 0.5
+        complexity_score = min(1.0, complexity / 10.0)
+        
+        return {
+            'actions': actions,
+            'dependencies': dependencies,
+            'complexity': complexity_score
+        }
+    
+    def _prioritize_actions(self, actions: List[Dict[str, Any]], 
+                           context: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Prioritize actions based on dependencies and context"""
+        prioritized = []
+        
+        for action in actions:
+            priority_score = 1.0
+            
+            # Increase priority for early steps
+            if action['step'] <= 2:
+                priority_score += 0.3
+            
+            # Increase priority based on action type
+            if action['type'] in ['preparation', 'planning', 'scoping']:
+                priority_score += 0.2
+            elif action['type'] in ['validation', 'reporting']:
+                priority_score -= 0.1
+            
+            # Factor in context urgency
+            urgency = context.get('urgency', 0.5)
+            priority_score *= (0.7 + urgency * 0.6)
+            
+            prioritized.append({
+                **action,
+                'priority': min(1.0, priority_score),
+                'estimated_effort': self._estimate_effort(action)
+            })
+        
+        # Sort by step order (maintain dependencies)
+        prioritized.sort(key=lambda x: x['step'])
+        
+        return prioritized
+    
+    def _estimate_effort(self, action: Dict[str, Any]) -> float:
+        """Estimate effort required for an action"""
+        type_effort = {
+            'data_collection': 0.6,
+            'processing': 0.7,
+            'synthesis': 0.8,
+            'implementation': 0.9,
+            'validation': 0.5,
+            'planning': 0.6,
+            'analysis': 0.7,
+            'design': 0.8
+        }
+        
+        return type_effort.get(action['type'], 0.5)
+    
+    def _assess_execution_feasibility(self, actions: List[Dict[str, Any]], 
+                                      context: Dict[str, Any]) -> Dict[str, Any]:
+        """Assess feasibility of executing the action plan"""
+        total_effort = sum(a.get('estimated_effort', 0.5) for a in actions)
+        avg_effort = total_effort / len(actions) if actions else 0
+        
+        # Check resource availability (simplified)
+        resource_score = 0.8  # Assume moderate resources
+        
+        # Check time constraints
+        time_constraint = context.get('time_limit')
+        time_score = 1.0
+        if time_constraint:
+            required_time = total_effort * 10  # Rough estimate
+            time_score = min(1.0, time_constraint / required_time)
+        
+        # Check complexity vs capability
+        capability_score = self.cognitive_coherence * 0.5 + self.awareness_level * 0.5
+        complexity_score = 1.0 - avg_effort
+        
+        # Overall feasibility
+        overall_score = (resource_score * 0.3 + time_score * 0.3 + 
+                        capability_score * 0.2 + complexity_score * 0.2)
+        
+        return {
+            'overall_score': overall_score,
+            'is_feasible': overall_score > 0.6,
+            'factors': {
+                'resource_availability': resource_score,
+                'time_adequacy': time_score,
+                'capability_match': capability_score,
+                'complexity_manageable': complexity_score
+            },
+            'total_estimated_effort': total_effort,
+            'risk_assessment': 'low' if overall_score > 0.8 else ('medium' if overall_score > 0.6 else 'high')
+        }
+    
+    def _create_execution_strategy(self, actions: List[Dict[str, Any]], 
+                                   feasibility: Dict[str, Any]) -> Dict[str, Any]:
+        """Create execution strategy based on actions and feasibility"""
+        if not feasibility['is_feasible']:
+            return {
+                'approach': 'cautious',
+                'recommendation': 'Consider breaking down into smaller tasks or requesting additional resources',
+                'parallel_execution': False,
+                'monitoring_frequency': 'high'
+            }
+        
+        # Identify which actions can be parallelized
+        # Actions without dependencies can potentially run in parallel
+        parallel_candidates = []
+        sequential_required = []
+        
+        for action in actions:
+            if action['type'] in ['data_collection', 'measurement', 'comprehension']:
+                parallel_candidates.append(action['step'])
+            else:
+                sequential_required.append(action['step'])
+        
+        can_parallelize = len(parallel_candidates) > 1
+        
+        return {
+            'approach': 'aggressive' if feasibility['overall_score'] > 0.8 else 'balanced',
+            'recommendation': 'Execute plan as designed' if feasibility['overall_score'] > 0.7 else 'Proceed with caution',
+            'parallel_execution': can_parallelize,
+            'parallel_steps': parallel_candidates if can_parallelize else [],
+            'sequential_steps': sequential_required,
+            'monitoring_frequency': 'low' if feasibility['overall_score'] > 0.8 else 'medium',
+            'checkpoints': [actions[i]['step'] for i in range(0, len(actions), max(1, len(actions) // 3))],
+            'rollback_points': [a['step'] for a in actions if a['type'] in ['validation', 'measurement']]
+        }
 
 
 class HolonManager:
@@ -1478,6 +2080,274 @@ class RevolutionaryAGISystem:
         """Analyze the trust relationships in the holon network"""
         return self.holon_manager.analyze_trust_network()
     
+    def generate_inferences(self, input_data: Dict[str, Any], context: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+        """
+        Generate inferences from input data using the consciousness core.
+        
+        Args:
+            input_data: Data to analyze and generate inferences from
+            context: Optional context for inference generation
+            
+        Returns:
+            List of inferences with type, content, confidence, and reasoning
+        """
+        try:
+            return self.core.generate_inferences(input_data, context)
+        except Exception as e:
+            logger.error(f"Inference generation failed: {e}")
+            return [{
+                'type': 'error',
+                'content': 'Failed to generate inferences',
+                'confidence': 0.0,
+                'reasoning': str(e)
+            }]
+    
+    def process_directive(self, directive: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
+        """
+        Process a directive and generate an action plan.
+        
+        Args:
+            directive: The directive/command to process
+            context: Optional context (priority, constraints, urgency, etc.)
+            
+        Returns:
+            Comprehensive response with parsed directive, action plan, and execution strategy
+        """
+        try:
+            # Security validation
+            if not self.security_manager.validate_input({'directive': directive}):
+                return {
+                    'directive': directive,
+                    'understood': False,
+                    'error': 'Security validation failed',
+                    'action_plan': {'actions': [], 'total_steps': 0},
+                    'confidence': 0.0
+                }
+            
+            # Process through consciousness core
+            result = self.core.process_directive(directive, context)
+            
+            # Security validation of output
+            if not self.security_manager.validate_output(result):
+                return {
+                    'directive': directive,
+                    'understood': False,
+                    'error': 'Output security validation failed',
+                    'action_plan': {'actions': [], 'total_steps': 0},
+                    'confidence': 0.0
+                }
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Directive processing failed: {e}")
+            return {
+                'directive': directive,
+                'understood': False,
+                'error': str(e),
+                'action_plan': {'actions': [], 'total_steps': 0},
+                'confidence': 0.0
+            }
+    
+    def think(self, about: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
+        """
+        High-level thinking method that combines inference generation and directive processing.
+        
+        This method enables the AGI to "think" about a topic by:
+        1. Generating inferences from available data
+        2. Processing any implicit directives
+        3. Combining insights into a coherent thought process
+        
+        Args:
+            about: What to think about (can be a question, topic, or directive)
+            context: Optional context to guide thinking
+            
+        Returns:
+            Comprehensive thinking response with inferences, insights, and conclusions
+        """
+        try:
+            context = context or {}
+            timestamp = time.time()
+            
+            # Determine if this is more of a directive or an analytical task
+            about_lower = about.lower()
+            is_directive = any(word in about_lower for word in 
+                             ['do', 'create', 'make', 'find', 'analyze', 'optimize', 'plan', 'decide'])
+            
+            # Generate inferences about the topic
+            thinking_data = {
+                'cognitive': 0.9,
+                'intention': 0.7 if is_directive else 0.5,
+                'emotional': context.get('emotional_context', 0.5),
+                'memory': 0.6
+            }
+            
+            inferences = self.generate_inferences(thinking_data, {
+                **context,
+                'topic': about
+            })
+            
+            # If it's a directive, process it as such
+            directive_result = None
+            if is_directive:
+                directive_result = self.process_directive(about, context)
+            
+            # Synthesize thinking response
+            thought_response = {
+                'about': about,
+                'timestamp': timestamp,
+                'thought_type': 'directive' if is_directive else 'analytical',
+                'inferences': inferences,
+                'insights': self._synthesize_insights(inferences, about, context),
+                'confidence': self._calculate_overall_confidence(inferences),
+                'consciousness_state': self.core.get_comprehensive_state()['consciousness_core']
+            }
+            
+            # Add directive results if applicable
+            if directive_result:
+                thought_response['directive_processing'] = directive_result
+                thought_response['action_plan'] = directive_result.get('action_plan')
+            
+            # Add conclusions
+            thought_response['conclusions'] = self._formulate_conclusions(
+                inferences, directive_result, about, context
+            )
+            
+            logger.info(f"Completed thinking about: '{about}' -> {len(inferences)} inferences generated")
+            
+            return thought_response
+            
+        except Exception as e:
+            logger.error(f"Thinking process failed: {e}")
+            return {
+                'about': about,
+                'error': str(e),
+                'thought_type': 'error',
+                'inferences': [],
+                'confidence': 0.0
+            }
+    
+    def _synthesize_insights(self, inferences: List[Dict[str, Any]], 
+                            topic: str, context: Dict[str, Any]) -> List[str]:
+        """Synthesize high-level insights from inferences"""
+        insights = []
+        
+        # Group inferences by type
+        by_type = {}
+        for inf in inferences:
+            inf_type = inf.get('type', 'unknown')
+            if inf_type not in by_type:
+                by_type[inf_type] = []
+            by_type[inf_type].append(inf)
+        
+        # Generate insights based on patterns
+        if 'pattern_recognition' in by_type and len(by_type['pattern_recognition']) > 0:
+            insights.append(f"Identified {len(by_type['pattern_recognition'])} significant patterns")
+        
+        if 'memory_recall' in by_type and len(by_type['memory_recall']) > 0:
+            insights.append(f"Drew upon {len(by_type['memory_recall'])} relevant past experiences")
+        
+        if 'causal_relationship' in by_type:
+            insights.append("Detected causal relationships in the data")
+        
+        if 'prediction' in by_type:
+            insights.append("Generated predictive insights about future states")
+        
+        # Calculate average confidence
+        confidences = [inf.get('confidence', 0) for inf in inferences]
+        if confidences:
+            avg_confidence = sum(confidences) / len(confidences)
+            if avg_confidence > 0.7:
+                insights.append(f"High confidence in analysis (avg: {avg_confidence:.2f})")
+            elif avg_confidence < 0.4:
+                insights.append(f"Low confidence - may need more data (avg: {avg_confidence:.2f})")
+        
+        # Add context-specific insights
+        if context.get('goals'):
+            insights.append(f"Analysis aligned with {len(context['goals'])} stated goals")
+        
+        return insights if insights else ["Generated basic analysis of the topic"]
+    
+    def _calculate_overall_confidence(self, inferences: List[Dict[str, Any]]) -> float:
+        """Calculate overall confidence score from inferences"""
+        if not inferences:
+            return 0.0
+        
+        confidences = [inf.get('confidence', 0) for inf in inferences]
+        
+        # Weight by inference type importance
+        weighted_sum = 0
+        total_weight = 0
+        
+        for inf in inferences:
+            conf = inf.get('confidence', 0)
+            inf_type = inf.get('type', 'unknown')
+            
+            # Different inference types have different weights
+            weight = {
+                'pattern_recognition': 1.2,
+                'causal_relationship': 1.3,
+                'prediction': 1.1,
+                'memory_recall': 1.0,
+                'goal_progress': 1.2,
+                'coherence_assessment': 0.9
+            }.get(inf_type, 1.0)
+            
+            weighted_sum += conf * weight
+            total_weight += weight
+        
+        if total_weight == 0:
+            return 0.0
+        
+        return min(1.0, weighted_sum / total_weight)
+    
+    def _formulate_conclusions(self, inferences: List[Dict[str, Any]], 
+                               directive_result: Optional[Dict[str, Any]],
+                               topic: str, context: Dict[str, Any]) -> List[str]:
+        """Formulate conclusions based on inferences and directive processing"""
+        conclusions = []
+        
+        # Analyze inference types present
+        inference_types = set(inf.get('type') for inf in inferences)
+        
+        # High-level conclusion based on what was found
+        if 'pattern_recognition' in inference_types:
+            conclusions.append("Clear patterns identified in the analyzed data")
+        
+        if 'causal_relationship' in inference_types:
+            conclusions.append("Causal relationships detected that explain observed changes")
+        
+        # Conclusion about directive execution if applicable
+        if directive_result:
+            if directive_result.get('understood'):
+                action_count = directive_result.get('action_plan', {}).get('total_steps', 0)
+                feasibility = directive_result.get('feasibility', {})
+                
+                if feasibility.get('is_feasible', False):
+                    conclusions.append(f"Directive is understood and feasible with {action_count} planned steps")
+                else:
+                    risk = feasibility.get('risk_assessment', 'unknown')
+                    conclusions.append(f"Directive understood but execution has {risk} risk")
+            else:
+                conclusions.append("Directive could not be fully understood - may need clarification")
+        
+        # Overall assessment
+        avg_confidence = self._calculate_overall_confidence(inferences)
+        if avg_confidence > 0.7:
+            conclusions.append("High confidence in the overall analysis and conclusions")
+        elif avg_confidence > 0.5:
+            conclusions.append("Moderate confidence - conclusions are reasonable but may need validation")
+        else:
+            conclusions.append("Low confidence - recommend gathering more information")
+        
+        # Add context-aware conclusion
+        if context.get('goals'):
+            goal_inferences = [inf for inf in inferences if inf.get('type') == 'goal_progress']
+            if goal_inferences:
+                conclusions.append("Analysis shows progress toward stated goals")
+        
+        return conclusions if conclusions else ["Analysis complete - see inferences for details"]
+    
     def start(self):
         """Start the AGI system with all services"""
         logger.info("Starting Revolutionary AGI System...")
@@ -1562,7 +2432,12 @@ class SecurityManager:
                     'awareness_response', 'attention_weights', 'neural_output',
                     'consciousness_state', 'memory_info', 'attention_info',
                     'performance_metrics', 'health_score', 'status', 'fallback_active',
-                    'recovery_attempted'
+                    'recovery_attempted',
+                    # Thinking system output keys
+                    'directive', 'understood', 'intent', 'primary_goal', 'sub_goals',
+                    'action_plan', 'inferences', 'feasibility', 'execution_strategy',
+                    'confidence', 'timestamp', 'about', 'thought_type', 'insights', 
+                    'conclusions', 'directive_processing'
                 }
                 
                 # If this looks like a legitimate AGI output, be more permissive
@@ -1591,14 +2466,15 @@ class SecurityManager:
         """Check if data contains dangerous patterns"""
         if isinstance(data, str):
             dangerous_keywords = [
-                '__import__', 'eval', 'exec', 'compile', 'open', 'os.', 'sys.',
-                'subprocess', 'shellexec', 'shell_exec', 'system'
+                '__import__', 'eval(', 'exec(', 'compile(', 'open(', 
+                'os.system', 'sys.exit', 'subprocess.', 'shellexec', 'shell_exec'
             ]
             lower_data = data.lower()
             for keyword in dangerous_keywords:
                 if keyword in lower_data:
                     return True
         elif isinstance(data, dict):
+            # Only check values, not keys (keys like 'execution_strategy' are fine)
             for value in data.values():
                 if self._contains_dangerous_patterns(value):
                     return True
