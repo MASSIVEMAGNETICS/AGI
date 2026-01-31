@@ -188,7 +188,7 @@ def demonstrate_thinking():
         context={'urgency': 0.75}
     )
     
-    print(f"Thought Type: {thought1['thought_type']}")
+    print(f"Thought Type: {thought2['thought_type']}")
     print(f"Confidence: {thought2['confidence']:.2%}")
     
     if 'action_plan' in thought2 and thought2['action_plan']:

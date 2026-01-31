@@ -2474,8 +2474,8 @@ class SecurityManager:
                 if keyword in lower_data:
                     return True
         elif isinstance(data, dict):
-            for key, value in data.items():
-                # Only check values, not keys (keys like 'execution_strategy' are fine)
+            # Only check values, not keys (keys like 'execution_strategy' are fine)
+            for value in data.values():
                 if self._contains_dangerous_patterns(value):
                     return True
         elif isinstance(data, list):
