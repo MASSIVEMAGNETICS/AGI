@@ -2,7 +2,76 @@
 
 All input streams flow into a river - A complete consciousness engine with multiple sensory inputs, attention mechanisms, memory, and intelligent data merging.
 
-## ✨ NEW: Revolutionary Thinking System
+## 🧠 NEW: NeuroGrid Studio
+
+**NeuroGrid Studio** is an enterprise-grade synthetic neural network platform built on top of the conscious-river engine. Train super-intelligent models on a live neural lattice and watch every neuron evolve in real time.
+
+![NeuroGrid Studio – live training](https://github.com/user-attachments/assets/31bec30e-b188-44e6-bcff-bd75a52e377f)
+
+### Features
+- **GridNN** – scalable 2-D neural lattice (default 64×64, up to 1024×1024) where every cell encodes hue, intensity and a symbol overlay
+- **Real-time WebGL visualization** – watch activations, gradients and pruning happen live at 30–60 fps
+- **FastAPI + WebSocket backend** – training events streamed to the browser the moment they happen
+- **Auto-ML Recommender** – watches your loss curve and proactively suggests: cosine LR annealing, focal loss, halved LR, and more
+- **Cell Inspector / AI Co-Pilot** – click any neuron to get a plain-English explanation of its role and current contribution
+- **Configurable hyperparameters** – grid size, depth, epochs, learning rate, sparsity, and loss function all tunable via UI sliders
+- **Loss Curve chart** – live-rendered canvas showing training progress
+
+### Quick Start
+
+```bash
+pip install -r requirements.txt
+
+# Start the NeuroGrid Studio server
+python3 -m neurogrid_studio.api
+# → Open http://localhost:8000 in your browser
+```
+
+### Python API
+
+```python
+from neurogrid_studio import GridNN, TrainingConfig, TrainingLoop
+
+# Create a 64×64 neural grid
+grid = GridNN(size=64, depth=8, learning_rate=1e-3, seed=42)
+
+# Explain any cell
+print(grid.explain_cell(0, 0)["explanation"])
+
+# Run a training loop
+config = TrainingConfig(grid_size=64, epochs=10, steps_per_epoch=100)
+loop = TrainingLoop(config=config, grid=grid)
+for event in loop.run():
+    print(f"[{event.event_type}] epoch={event.epoch} loss={event.loss:.5f}")
+```
+
+### Architecture
+
+```
+neurogrid_studio/
+├── grid_nn.py      ← GridNN: 2-D neural lattice with hue/intensity/symbol cells
+├── training.py     ← TrainingLoop + AutoMLRecommender (loss-curve watcher)
+├── api.py          ← FastAPI server: REST endpoints + WebSocket /ws/train
+└── web/
+    └── index.html  ← Single-file frontend: WebGL grid + live metrics + UI
+```
+
+### REST API
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Server health check |
+| POST | `/api/train/start` | Start a training run |
+| POST | `/api/train/stop` | Stop the current run |
+| POST | `/api/train/accept` | Accept an Auto-ML recommendation |
+| GET | `/api/grid/stats` | Live grid statistics |
+| GET | `/api/grid/snapshot` | Full JSON grid snapshot |
+| GET | `/api/cell/{row}/{col}` | Plain-English cell explanation |
+| WS | `/ws/train` | Real-time training event stream |
+
+---
+
+## ✨ Revolutionary Thinking System
 
 The system now includes a **fully functional thinking system** that generates inferences and processes directives:
 
