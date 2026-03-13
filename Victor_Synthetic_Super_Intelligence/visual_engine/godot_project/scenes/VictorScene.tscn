@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/VictorController.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://victor_head_model" path="res://models/victor_head.glb" id="2"]
+
+[node name="VictorScene" type="Node3D"]
+script = ExtResource("1")
+
+[node name="VictorCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 0.5, 3)
+fov = 45.0
+
+[node name="VictorHead" parent="." instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="VictorLights" type="Node3D" parent="."]
+
+[node name="KeyLight" type="DirectionalLight3D" parent="VictorLights"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 2)
+light_color = Color(0, 0.8, 0.8, 1)
+light_energy = 1.5
+
+[node name="RimLight" type="OmniLight3D" parent="VictorLights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+light_color = Color(0.5, 0.8, 1, 1)
+light_energy = 2.0
+omni_range = 10.0
+
+[node name="Background" type="Node3D" parent="."]
+
+[node name="BackdropQuad" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, -5)
+mesh = SubResource("QuadMesh_backdrop")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Subtitles" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -150.0
+offset_right = 400.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="UI/Subtitles"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.8, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
+text = "Initializing Victor..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_backdrop"]
+size = Vector2(1, 1)

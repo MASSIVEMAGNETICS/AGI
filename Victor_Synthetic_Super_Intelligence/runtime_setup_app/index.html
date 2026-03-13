@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Victor Runtime Setup</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d1117;
+        --panel: #161b22;
+        --border: #30363d;
+        --text: #e6edf3;
+        --accent: #238636;
+        --accent-alt: #6e40c9;
+        --ok: #3fb950;
+        --warn: #f0b429;
+        --fail: #f85149;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f6f8fa;
+          --panel: #ffffff;
+          --border: #d0d7de;
+          --text: #24292f;
+          --accent: #1f883d;
+          --accent-alt: #6e40c9;
+          --ok: #1f883d;
+          --warn: #9a6700;
+          --fail: #cf222e;
+        }
+      }
+      body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+      header { padding: 24px; background: var(--panel); border-bottom: 1px solid var(--border); }
+      main { padding: 24px; max-width: 960px; margin: 0 auto; }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); margin-bottom: 16px; }
+      .btn { background: var(--accent); color: white; border: none; padding: 12px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+      .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+      .step { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+      .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; border: 1px solid var(--border); }
+      .status-ok { color: var(--ok); }
+      .status-pending { color: var(--warn); }
+      .status-fail { color: var(--fail); }
+      code { background: var(--bg); border: 1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
+      a { color: #58a6ff; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Victor Runtime Setup</h1>
+      <p>One-click guided flow to install dependencies, run smoke checks, and launch the runtime.</p>
+    </header>
+    <main>
+      <div id="app"></div>
+    </main>
+    <script type="text/javascript">
+      const stepsTemplate = [
+        { id: "install", title: "Install dependencies", cmd: "python bootstrap.py" },
+        { id: "smoke", title: "Run smoke check", cmd: "python bootstrap.py --smoke-only" },
+        { id: "guided", title: "Interactive guided setup", cmd: "python guided_setup.py" },
+        { id: "launch", title: "Launch runtime", cmd: "python victor_interactive.py" },
+      ];
+
+      const statusText = { ok: "Ready", pending: "Pending", fail: "Needs attention" };
+
+      function render(statuses, busy) {
+        const app = document.getElementById("app");
+        const stepsHtml = stepsTemplate
+          .map((step) => {
+            const status = statuses[step.id];
+            const cls =
+              status === "ok" ? "status-ok" : status === "pending" ? "status-pending" : "status-fail";
+            return `<div class="step">
+              <span class="badge ${cls}">${statusText[status] || status}</span>
+              <div>
+                <div>${step.title}</div>
+                <div style="font-size:12px;opacity:0.8"><code>${step.cmd}</code></div>
+              </div>
+            </div>`;
+          })
+          .join("");
+
+        app.innerHTML = `
+          <div class="card">
+            <h2>One-click flow</h2>
+            <p>Copy/paste this command for a full no-prompt setup (best for non-technical users):</p>
+            <div class="step" style="align-items:flex-start;">
+              <span class="badge status-ok">Copy</span>
+              <div><code>python guided_setup.py --auto --launch-runtime</code></div>
+            </div>
+            <p style="margin-top:8px;">Or click once to walk through install → smoke → guided setup → launch (manual tracking only).</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button class="btn" id="mark-next" ${busy ? "disabled" : ""}>Mark next step</button>
+              <button class="btn" id="reset" style="background:#6e40c9">Reset</button>
+            </div>
+            <p style="margin-top:12px;font-size:13px;opacity:0.8">This UI does not execute code directly; copy commands into your terminal.</p>
+          </div>
+          <div class="card">
+            <h3>Progress</h3>
+            ${stepsHtml}
+          </div>
+          <div class="card">
+            <h3>Troubleshooting</h3>
+            <ul>
+              <li>Ensure Python 3.8+ is installed and on PATH</li>
+              <li>Run <code>python bootstrap.py --allow-missing</code> if optional deps are unavailable</li>
+              <li>Use <code>python guided_setup.py</code> for an interactive flow</li>
+              <li>Set <code>VICTOR_VERBOSE_LOG=1</code> for verbose logs</li>
+            </ul>
+          </div>`;
+
+        document.getElementById("mark-next").onclick = () => {
+          const order = ["install", "smoke", "guided", "launch"];
+          const next = order.find((id) => statuses[id] === "pending");
+          if (next) {
+            statuses[next] = "ok";
+            render(statuses, false);
+          }
+        };
+
+        document.getElementById("reset").onclick = () => {
+          const resetStatuses = { install: "pending", smoke: "pending", guided: "pending", launch: "pending" };
+          render(resetStatuses, false);
+        };
+      }
+
+      render({ install: "pending", smoke: "pending", guided: "pending", launch: "pending" }, false);
+    </script>
+  </body>
+</html>

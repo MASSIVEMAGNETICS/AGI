@@ -1,0 +1,27 @@
+[
+  {
+    "id": "task_example_001",
+    "type": "general",
+    "description": "Generate a comprehensive analysis of quantum computing",
+    "inputs": {
+      "topic": "quantum computing",
+      "depth": "comprehensive"
+    },
+    "priority": 7,
+    "deadline": null,
+    "context": {}
+  },
+  {
+    "id": "task_example_002",
+    "type": "content_generation",
+    "description": "Create a professional article about AI trends",
+    "inputs": {
+      "topic": "AI trends 2025",
+      "style": "professional",
+      "word_count": 1000
+    },
+    "priority": 5,
+    "deadline": null,
+    "context": {}
+  }
+]

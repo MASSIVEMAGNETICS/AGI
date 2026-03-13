@@ -1,0 +1,81 @@
+# SSI Framework Requirements
+# Python 3.8+
+
+# Core dependencies (from Victor Hub)
+numpy>=1.21.0
+pyyaml>=6.0
+
+# Causal AI
+dowhy>=0.11.0
+causalml>=0.15.0
+econml>=0.14.0
+causalnex>=0.12.0
+
+# Neurosymbolic AI
+# scallopy>=0.2.0  # Uncomment when available via pip
+torch>=2.0.0
+tensorflow>=2.13.0  # For LTN
+
+# AI Agents & LLMs
+langgraph>=0.0.30
+langchain>=0.1.0
+autogen-agentchat>=0.2.0
+
+# Continual Learning
+avalanche-lib>=0.4.0
+river>=0.20.0
+
+# Fairness & Bias
+aif360>=0.5.0
+fairlearn>=0.9.0
+
+# Hardware Acceleration
+onnx>=1.14.0
+onnxruntime>=1.15.0
+# onnxruntime-gpu>=1.15.0  # Uncomment for GPU support
+
+# Quantum Computing (optional)
+pennylane>=0.32.0
+qiskit>=0.44.0
+
+# Federated Learning
+flwr>=1.5.0
+
+# Model Training & Optimization
+scikit-learn>=1.3.0
+optuna>=3.3.0
+
+# ML Ops & Monitoring
+mlflow>=2.7.0
+wandb>=0.15.0
+evidently>=0.4.0
+
+# Data Management
+dvc>=3.0.0
+great-expectations>=0.17.0
+
+# Visualization
+graphviz>=0.20.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Web Services (for deployment)
+fastapi>=0.103.0
+uvicorn>=0.23.0
+pydantic>=2.3.0
+
+# Utilities
+tqdm>=4.66.0
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Documentation
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+
+# Security
+cryptography>=41.0.0

@@ -1,0 +1,63 @@
+# Victor Personal Runtime - Default Configuration
+
+# Configuration version
+version: "1.0.0"
+
+# User settings
+user:
+  name: ""  # Set your name here
+
+# Cross-device sync settings
+sync:
+  enabled: true
+  interval_seconds: 300  # 5 minutes
+  github_gist_id: null  # Set your GitHub Gist ID for encrypted sync
+  encryption_enabled: true
+
+# Personal learning engine
+learning:
+  enabled: true
+  local_only: true  # Keep learning data on device
+  model_sync: false  # Don't sync models by default
+  retention_days: 90
+
+# Overlay assistant (Windows/Android only)
+overlay:
+  enabled: false  # Disabled by default - enable if needed
+  opacity: 0.9
+  position: bottom_right
+  size: medium
+
+# Task automation
+automation:
+  enabled: false  # Disabled by default
+  require_confirmation: true  # Always ask before automating
+  allowed_apps: []  # Add app names to allow automation
+
+# Privacy settings - all off by default
+privacy:
+  telemetry: false
+  crash_reports: false
+  usage_analytics: false
+
+# Cross-device mesh networking
+mesh:
+  enabled: true
+  discovery_port: 8898
+  mesh_port: 8899
+  auto_connect: true
+
+# Notification settings
+notifications:
+  enabled: true
+  sound: true
+  categories:
+    alerts: true
+    suggestions: true
+    sync: false
+
+# UI settings
+ui:
+  theme: system
+  language: en
+  font_size: medium
