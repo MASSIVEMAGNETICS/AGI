@@ -1,0 +1,21 @@
+Victor Blob Extractor (v1.0.0-BLOB-EXTRACTOR-GODCORE)
+==================================================
+
+Delivers:
+- Export structure → JSON / SQLite
+- AST-level parsing (real Python intelligence)
+- Auto-split monolith into modules by scanning for GODCORE headers (and optional '###' markers)
+- Batch extraction to real files on disk
+- Victor ingestion hook (memory envelope + trust scoring signals)
+- Visual graph output (Graphviz DOT: classes/functions/files + imports)
+
+Run (full pipeline)
+-------------------
+python victor_blob_extractor_v1_0_0_GODCORE.py --input "PROJECT SUNO KILLER pt 2.txt" --out "./extracted" ^
+  --json "./extracted/report.json" --sqlite "./extracted/report.sqlite" --dot "./extracted/graph.dot" --ingest "./extracted/ingest.json"
+
+Optional (graph render):
+dot -Tpng ./extracted/graph.dot -o ./extracted/graph.png
+
+Optional dependency:
+pip install chardet

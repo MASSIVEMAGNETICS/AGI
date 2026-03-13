@@ -1,0 +1,84 @@
+{
+  "title": "Example AI Research Project",
+  "date": "2024-01-15",
+  "lastUpdated": "2024-06-30",
+  "authors": [
+    {
+      "name": "Researcher Name",
+      "role": "Lead Researcher",
+      "email": "researcher@example.com",
+      "affiliation": "MASSIVEMAGNETICS"
+    }
+  ],
+  "category": "ai",
+  "subcategory": "machine-learning",
+  "tags": [
+    "example",
+    "template",
+    "machine-learning",
+    "classification",
+    "pytorch"
+  ],
+  "status": "completed",
+  "license": "MIT",
+  "description": "An example project demonstrating proper structure and documentation for AI research in the Tooki Research Lab repository",
+  "keywords": [
+    "example",
+    "template",
+    "documentation",
+    "best-practices"
+  ],
+  "abstract": "This project serves as a comprehensive template and example for researchers contributing to the Tooki Research Lab. It demonstrates proper project structure, documentation standards, and reproducibility guidelines.",
+  "objectives": [
+    "Demonstrate proper project organization",
+    "Showcase documentation best practices",
+    "Provide reproducibility template",
+    "Illustrate result presentation"
+  ],
+  "methodology": {
+    "approach": "Standard supervised learning pipeline with comprehensive documentation",
+    "tools": ["PyTorch", "NumPy", "Pandas", "Matplotlib"],
+    "languages": ["python"]
+  },
+  "datasets": [
+    {
+      "name": "Example Dataset",
+      "source": "Synthetic for demonstration",
+      "size": "15,000 samples",
+      "description": "Example dataset showing proper data documentation"
+    }
+  ],
+  "results": {
+    "summary": "Achieved 95% accuracy on test set with efficient training",
+    "metrics": {
+      "accuracy": 0.952,
+      "precision": 0.948,
+      "recall": 0.956,
+      "f1_score": 0.952
+    }
+  },
+  "publications": [],
+  "related": [],
+  "dependencies": {
+    "python": ">=3.9",
+    "pytorch": ">=1.10",
+    "numpy": ">=1.20",
+    "pandas": ">=1.3"
+  },
+  "hardware": {
+    "gpu": "Not required (example)",
+    "memory": "8GB RAM",
+    "compute": "Minimal (example)"
+  },
+  "reproducibility": {
+    "seed": 42,
+    "deterministic": true,
+    "instructions": "See README.md for complete setup and execution instructions"
+  },
+  "links": {
+    "repository": "https://github.com/MASSIVEMAGNETICS/tooki",
+    "demo": null,
+    "documentation": "/docs"
+  },
+  "notes": "This is an example project for demonstration purposes. Replace with actual research content."
+}
