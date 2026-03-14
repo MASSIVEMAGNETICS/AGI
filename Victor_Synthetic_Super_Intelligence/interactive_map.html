@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Victor SSI – Interactive Capability Map</title>
+  <style>
+    :root {
+      --bg: #070913;
+      --panel: #0f1324;
+      --card: #131a30;
+      --text: #e8edf7;
+      --muted: #9fb3d1;
+      --accent: #67e8f9;
+      --accent-2: #a78bfa;
+      --border: #1f2a44;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(103, 232, 249, 0.08), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(167, 139, 250, 0.12), transparent 28%),
+                  var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      padding: 32px;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+      letter-spacing: 0.4px;
+      font-size: 26px;
+    }
+
+    p {
+      margin: 6px 0 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .hint {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      font-size: 13px;
+    }
+
+    .layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    #viz {
+      height: 720px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    #details {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px 18px 22px;
+      position: sticky;
+      top: 22px;
+    }
+
+    #details h2 {
+      margin: 2px 0 6px;
+      font-size: 20px;
+    }
+
+    .summary {
+      color: var(--muted);
+      margin: 6px 0 14px 0;
+    }
+
+    .section-title {
+      font-size: 13px;
+      letter-spacing: 0.4px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin: 14px 0 8px;
+    }
+
+    ul {
+      margin: 0 0 10px 18px;
+      padding: 0;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .docs a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      margin: 4px 0;
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .docs a:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    code {
+      display: block;
+      background: #0b1224;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 6px 0;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .dim {
+      opacity: 0.18;
+      transition: opacity 0.15s;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 1024px) {
+      body { padding: 20px; }
+      .layout { grid-template-columns: 1fr; }
+      #details { position: relative; top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Victor Synthetic Super Intelligence Interactive Capability Map</h1>
+    <p>Explore how the Victor Synthetic Super Intelligence hub composes cognition, runtime, skills, safety, and interfaces. Click any node to learn what it does and how to try it.</p>
+    <div class="hint">
+      <span class="pill">Click nodes to highlight relationships</span>
+      <span class="pill">Drag to reposition nodes anywhere on the canvas</span>
+    </div>
+    <div id="legend" class="legend"></div>
+  </header>
+
+  <section class="layout">
+    <div id="viz" aria-label="Interactive graph of Victor capabilities"></div>
+    <aside id="details" aria-live="polite">
+      <h2>Start Exploring</h2>
+      <p class="summary">Select a node on the map to see how that capability works, related components, and quick commands from this repository.</p>
+      <div id="details-content"></div>
+    </aside>
+  </section>
+
+  <script>
+    const capabilities = [
+      {
+        id: "unified-core",
+        label: "Unified Core",
+        group: "Cognition",
+        summary: "Central reasoning cortex that routes intents, manages memory, and coordinates every skill.",
+        highlights: [
+          "Skill routing, planning, and stateful context",
+          "Vector + recurrent memory to keep long-running sessions coherent",
+          "Safety gates for intent validation and audit logging"
+        ],
+        docs: [
+          { label: "UNIFIED_CORE_README.md", href: "./UNIFIED_CORE_README.md" },
+          { label: "victor_interactive.py", href: "./victor_interactive.py" }
+        ],
+        commands: [
+          "python victor_interactive.py",
+          "python unified_core.py --demo"
+        ]
+      },
+      {
+        id: "victor-runtime",
+        label: "Victor Runtime",
+        group: "Orchestration",
+        summary: "Production runtime that orchestrates devices, consent, and personal control.",
+        highlights: [
+          "Personal runtime with explicit consent and user controls",
+          "Federated, cross-device learning with opt-in overlays",
+          "Auditable configuration synced to your workspace"
+        ],
+        docs: [
+          { label: "victor_runtime/", href: "./victor_runtime" },
+          { label: "INSTALL_COMPLETE.md", href: "./INSTALL_COMPLETE.md" }
+        ],
+        commands: [
+          "python install_complete.py",
+          "python victor_interactive.py --menu"
+        ]
+      },
+      {
+        id: "skill-registry",
+        label: "Skill Registry",
+        group: "Skills",
+        summary: "Auto-discovers and wires Victor skills so tasks reach the right capability.",
+        highlights: [
+          "Loads new skills like ConsciousnessRiver, BrainSimulation, WorldModelHybrid",
+          "Keeps a manifest of 60+ repos for rapid composition",
+          "Provides simple hooks so you can add your own skills"
+        ],
+        docs: [
+          { label: "EXAMPLES.md", href: "./EXAMPLES.md" },
+          { label: "example_new_skills.py", href: "./example_new_skills.py" }
+        ],
+        commands: [
+          "python example_new_skills.py",
+          "python full_demo.py --interactive"
+        ]
+      },
+      {
+        id: "advanced-ai",
+        label: "Advanced AI Tensor Core",
+        group: "Tensor Core",
+        summary: "Autograd engine with liquid attention, HyperNEAT, and fractal coordination.",
+        highlights: [
+          "Custom tensor autograd with SGD/Adam optimizers",
+          "Liquid time-constant attention and ES-HyperNEAT substrates",
+          "Fractal multi-agent coordination protocol (FMACP)"
+        ],
+        docs: [
+          { label: "advanced_ai/README.md", href: "./advanced_ai/README.md" },
+          { label: "advanced_ai/tensor_core.py", href: "./advanced_ai/tensor_core.py" }
+        ],
+        commands: [
+          'python -c "import asyncio, advanced_ai; asyncio.run(advanced_ai.genesis_loop())"',
+          "python full_demo.py --verbose"
+        ]
+      },
+      {
+        id: "genesis",
+        label: "Genesis Engine",
+        group: "Training",
+        summary: "Quantum-fractal training pipeline that evolves Victor with gradient-based learning.",
+        highlights: [
+          "Golden-ratio quantum mesh with memoized DFS",
+          "Gradient-based evolution and pulse telemetry",
+          "Works with the tensor core for trainable cognition"
+        ],
+        docs: [
+          { label: "GENESIS_QUICKSTART.md", href: "./GENESIS_QUICKSTART.md" },
+          { label: "genesis.py", href: "./genesis.py" }
+        ],
+        commands: [
+          "python genesis.py --demo",
+          "python full_demo.py"
+        ]
+      },
+      {
+        id: "nlp",
+        label: "NLP Integration",
+        group: "Language",
+        summary: "spaCy + tokenizers pipeline for intent understanding, summarization, and chat flows.",
+        highlights: [
+          "spaCy-based parsing and entity extraction",
+          "Tokenization for long-context and summarization routes",
+          "Plugs directly into the unified core intent router"
+        ],
+        docs: [
+          { label: "NLP_QUICKSTART.md", href: "./NLP_QUICKSTART.md" },
+          { label: "example_nlp_integration.py", href: "./example_nlp_integration.py" }
+        ],
+        commands: [
+          "python example_nlp_integration.py",
+          "python test_nlp_skill.py"
+        ]
+      },
+      {
+        id: "visual-engine",
+        label: "Visual Engine",
+        group: "Interface",
+        summary: "Real-time 3D avatar and websocket bridge that mirrors Victor's state.",
+        highlights: [
+          "Streams Victor state over websockets to a visual frontend",
+          "Supports emotion-driven animations and live telemetry",
+          "Pairs with interactive runtime for rich sessions"
+        ],
+        docs: [
+          { label: "launch_visual_engine.py", href: "./launch_visual_engine.py" },
+          { label: "run_victor_with_visual.py", href: "./run_victor_with_visual.py" }
+        ],
+        commands: [
+          "python launch_visual_engine.py",
+          "python run_victor_with_visual.py"
+        ]
+      },
+      {
+        id: "agents",
+        label: "Holon / Multi-Agent",
+        group: "Agents",
+        summary: "Fractal agents and Holon Omega orchestration for swarm-style reasoning.",
+        highlights: [
+          "Holon Omega coordination with recursive delegation",
+          "Spawns specialized agents with shared Victor cognition",
+          "Integrates with swarm tests in holon and victor modules"
+        ],
+        docs: [
+          { label: "victor_holon_neocortex.py", href: "./victor_holon_neocortex.py" },
+          { label: "advanced_ai/holon_omega.py", href: "./advanced_ai/holon_omega.py" }
+        ],
+        commands: [
+          "python test_holon_omega.py",
+          "python test_victor_neocortex.py"
+        ]
+      },
+      {
+        id: "ssi",
+        label: "SSI Framework",
+        group: "Sovereignty",
+        summary: "Seven-part sovereignty dataset with verified neurosymbolic reasoning and auditability.",
+        highlights: [
+          "Causal AI, neurosymbolic reasoning, and edge deployment blueprints",
+          "Swarm framework with federated execution",
+          "Sovereignty audit for provenance and hallucination detection"
+        ],
+        docs: [
+          { label: "ssi_framework/README.md", href: "./ssi_framework/README.md" },
+          { label: "ssi_framework/examples_integration.py", href: "./ssi_framework/examples_integration.py" }
+        ],
+        commands: [
+          "python ssi_framework/examples_integration.py",
+          "python ssi_framework/verify_ssi_framework.py"
+        ]
+      },
+      {
+        id: "safety",
+        label: "Safety & Audit",
+        group: "Safety",
+        summary: "Security and safety controls for language, sovereignty, and runtime behavior.",
+        highlights: [
+          "NLP safety guardrails and sovereignty audit dimensions",
+          "Bloodline verification and consent gating in runtimes",
+          "Traceability and audit logs for every task"
+        ],
+        docs: [
+          { label: "SECURITY_SUMMARY.md", href: "./SECURITY_SUMMARY.md" },
+          { label: "NLP_SECURITY_SUMMARY.md", href: "./NLP_SECURITY_SUMMARY.md" }
+        ],
+        commands: [
+          "python verify_integration.py",
+          "python test_victor_runtime.py"
+        ]
+      },
+      {
+        id: "interactive-runtime",
+        label: "Interactive Runtime",
+        group: "Interface",
+        summary: "Production CLI that unifies Victor Hub, Genesis, Visual Engine, and skill registry.",
+        highlights: [
+          "Rich terminal UI with history, menus, and status views",
+          "Codomination mode for collaborative intelligence sessions",
+          "Auto-evolution and persistence for long-running labs"
+        ],
+        docs: [
+          { label: "victor_interactive.py", href: "./victor_interactive.py" },
+          { label: "ADVANCED_AI_QUICKSTART.md", href: "./ADVANCED_AI_QUICKSTART.md" }
+        ],
+        commands: [
+          "python victor_interactive.py",
+          "python full_demo.py --interactive"
+        ]
+      },
+      {
+        id: "notebooks",
+        label: "Learning Notebooks",
+        group: "Learning",
+        summary: "Hands-on Colab notebooks to experiment without local setup.",
+        highlights: [
+          "Seven guided notebooks from quick start to full system demo",
+          "Auto-installs dependencies and provides visualizations",
+          "Great for workshops and onboarding new contributors"
+        ],
+        docs: [
+          { label: "notebooks/README.md", href: "./notebooks/README.md" },
+          { label: "07_Complete_System_Demo.ipynb", href: "./notebooks/07_Complete_System_Demo.ipynb" }
+        ],
+        commands: [
+          "cat notebooks/README.md",
+          "python -m webbrowser notebooks/03_Interactive_Runtime.ipynb"
+        ]
+      }
+    ];
+
+    const links = [
+      { source: "unified-core", target: "victor-runtime", label: "drives runtime" },
+      { source: "unified-core", target: "skill-registry", label: "routes intents" },
+      { source: "unified-core", target: "nlp", label: "feeds language" },
+      { source: "victor-runtime", target: "interactive-runtime", label: "operates" },
+      { source: "interactive-runtime", target: "visual-engine", label: "syncs UI" },
+      { source: "interactive-runtime", target: "skill-registry", label: "calls skills" },
+      { source: "skill-registry", target: "advanced-ai", label: "executes" },
+      { source: "advanced-ai", target: "genesis", label: "trained by" },
+      { source: "advanced-ai", target: "agents", label: "powers" },
+      { source: "agents", target: "visual-engine", label: "telemetry" },
+      { source: "victor-runtime", target: "safety", label: "enforced by" },
+      { source: "ssi", target: "safety", label: "audits" },
+      { source: "ssi", target: "victor-runtime", label: "guides" },
+      { source: "notebooks", target: "interactive-runtime", label: "teaches" },
+      { source: "notebooks", target: "ssi", label: "explains" }
+    ];
+
+    const groups = [...new Set(capabilities.map(d => d.group))];
+    const LAYOUT_RADIUS_FACTOR = 2.5;
+    const NODE_BOUNDARY_MARGIN = 32;
+    const MAX_LABEL_CHARS = 16;
+    const palette = [
+      "#67e8f9", "#a78bfa", "#fcd34d", "#34d399",
+      "#60a5fa", "#fb7185", "#f472b6", "#f97316"
+    ];
+    const color = (group) => palette[groups.indexOf(group) % palette.length];
+    const truncateLabel = (text) => text.length > MAX_LABEL_CHARS ? `${text.slice(0, MAX_LABEL_CHARS - 2)}…` : text;
+    const safeHref = (href) => {
+      if (href.startsWith("./") || href.startsWith("../") || href.startsWith("http://") || href.startsWith("https://")) {
+        return href;
+      }
+      return "#";
+    };
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const viz = document.getElementById("viz");
+    const width = viz.clientWidth;
+    const height = viz.clientHeight;
+    const center = { x: width / 2, y: height / 2 };
+    const radius = Math.min(width, height) / LAYOUT_RADIUS_FACTOR;
+
+    const nodeById = new Map(capabilities.map(n => [n.id, n]));
+    const resolvedLinks = links.map(l => ({
+      ...l,
+      source: nodeById.get(l.source),
+      target: nodeById.get(l.target)
+    }));
+
+    capabilities.forEach((node, i) => {
+      const angle = (2 * Math.PI * i) / capabilities.length;
+      node.x = center.x + radius * Math.cos(angle);
+      node.y = center.y + radius * Math.sin(angle);
+    });
+
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("aria-label", "Graph view");
+    viz.appendChild(svg);
+
+    const linkLayer = document.createElementNS(svgNS, "g");
+    const nodeLayer = document.createElementNS(svgNS, "g");
+    svg.appendChild(linkLayer);
+    svg.appendChild(nodeLayer);
+
+    const linkEls = resolvedLinks.map(link => {
+      const line = document.createElementNS(svgNS, "line");
+      line.setAttribute("stroke", "#20304f");
+      line.setAttribute("stroke-width", "2");
+      line.setAttribute("stroke-opacity", "0.7");
+      linkLayer.appendChild(line);
+      return { el: line, link };
+    });
+
+    const nodeEls = capabilities.map(node => {
+      const g = document.createElementNS(svgNS, "g");
+      g.setAttribute("cursor", "pointer");
+
+      const circle = document.createElementNS(svgNS, "circle");
+      circle.setAttribute("r", "24");
+      circle.setAttribute("fill", color(node.group));
+      circle.setAttribute("stroke", "#0b1021");
+      circle.setAttribute("stroke-width", "2.5");
+      g.appendChild(circle);
+
+      const label = document.createElementNS(svgNS, "text");
+      label.setAttribute("dy", "4");
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("fill", "#0b1021");
+      label.setAttribute("font-size", "11");
+      label.setAttribute("font-weight", "700");
+      label.textContent = truncateLabel(node.label);
+      g.appendChild(label);
+
+      g.addEventListener("click", () => selectNode(node));
+      g.addEventListener("pointerdown", (event) => startDrag(event, node));
+
+      nodeLayer.appendChild(g);
+      return { g, circle, label, node };
+    });
+
+    let dragState = null;
+
+    function startDrag(event, node) {
+      event.preventDefault();
+      const rect = viz.getBoundingClientRect();
+      dragState = {
+        node,
+        offsetX: event.clientX - rect.left - node.x,
+        offsetY: event.clientY - rect.top - node.y
+      };
+      if (viz.setPointerCapture && event.pointerId !== undefined) {
+        viz.setPointerCapture(event.pointerId);
+      }
+    }
+
+    viz.addEventListener("pointermove", (event) => {
+      if (!dragState) return;
+      const rect = viz.getBoundingClientRect();
+      const x = event.clientX - rect.left - dragState.offsetX;
+      const y = event.clientY - rect.top - dragState.offsetY;
+      dragState.node.x = Math.max(NODE_BOUNDARY_MARGIN, Math.min(width - NODE_BOUNDARY_MARGIN, x));
+      dragState.node.y = Math.max(NODE_BOUNDARY_MARGIN, Math.min(height - NODE_BOUNDARY_MARGIN, y));
+      updatePositions();
+    });
+
+    viz.addEventListener("pointerup", (event) => {
+      if (dragState) {
+        if (viz.releasePointerCapture && event.pointerId !== undefined) {
+          viz.releasePointerCapture(event.pointerId);
+        }
+      }
+      dragState = null;
+    });
+
+    function updatePositions() {
+      linkEls.forEach(({ el, link }) => {
+        el.setAttribute("x1", link.source.x);
+        el.setAttribute("y1", link.source.y);
+        el.setAttribute("x2", link.target.x);
+        el.setAttribute("y2", link.target.y);
+      });
+
+      nodeEls.forEach(({ g, node }) => {
+        g.setAttribute("transform", `translate(${node.x},${node.y})`);
+      });
+    }
+
+    function selectNode(nodeData) {
+      highlightNeighbors(nodeData);
+      renderDetails(nodeData);
+    }
+
+    function highlightNeighbors(nodeData) {
+      const neighbors = new Set([nodeData.id]);
+      resolvedLinks.forEach(l => {
+        if (l.source.id === nodeData.id) neighbors.add(l.target.id);
+        if (l.target.id === nodeData.id) neighbors.add(l.source.id);
+      });
+
+      nodeEls.forEach(({ g, node }) => {
+        const isNeighbor = neighbors.has(node.id);
+        g.classList.toggle("dim", !isNeighbor);
+      });
+
+      linkEls.forEach(({ el, link }) => {
+        const active = neighbors.has(link.source.id) && neighbors.has(link.target.id);
+        el.classList.toggle("dim", !active);
+        el.setAttribute("stroke-opacity", active ? "0.9" : "0.08");
+        el.setAttribute("stroke", (link.source.id === nodeData.id || link.target.id === nodeData.id) ? color(nodeData.group) : "#20304f");
+      });
+    }
+
+    function renderDetails(nodeData) {
+      const container = document.getElementById("details-content");
+      if (container.replaceChildren) {
+        container.replaceChildren();
+      } else {
+        container.innerHTML = "";
+      }
+
+      const title = document.createElement("h2");
+      title.textContent = nodeData.label;
+      container.appendChild(title);
+
+      const summary = document.createElement("p");
+      summary.className = "summary";
+      summary.textContent = nodeData.summary;
+      container.appendChild(summary);
+
+      const abilitiesTitle = document.createElement("div");
+      abilitiesTitle.className = "section-title";
+      abilitiesTitle.textContent = "Key Abilities";
+      container.appendChild(abilitiesTitle);
+
+      const list = document.createElement("ul");
+      nodeData.highlights.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+      container.appendChild(list);
+
+      const docsTitle = document.createElement("div");
+      docsTitle.className = "section-title";
+      docsTitle.textContent = "Docs & Entry Points";
+      container.appendChild(docsTitle);
+
+      const docsWrap = document.createElement("div");
+      docsWrap.className = "docs";
+      nodeData.docs.forEach(doc => {
+        const a = document.createElement("a");
+        a.href = safeHref(doc.href);
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = `📄 ${doc.label}`;
+        docsWrap.appendChild(a);
+      });
+      container.appendChild(docsWrap);
+
+      const cmdsTitle = document.createElement("div");
+      cmdsTitle.className = "section-title";
+      cmdsTitle.textContent = "Try It";
+      container.appendChild(cmdsTitle);
+
+      nodeData.commands.forEach(cmd => {
+        const code = document.createElement("code");
+        code.textContent = cmd;
+        container.appendChild(code);
+      });
+    }
+
+    function renderLegend() {
+      const legend = document.getElementById("legend");
+      groups.forEach(group => {
+        const item = document.createElement("div");
+        item.className = "legend-item";
+        item.innerHTML = `<span class="dot" style="background:${color(group)}"></span>${group}`;
+        legend.appendChild(item);
+      });
+    }
+
+    renderLegend();
+    updatePositions();
+    selectNode(capabilities[0]);
+  </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture Guide &mdash; Victor AGI Core 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Guides" href="guides/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Victor AGI Core
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#basic-tensor-operations">Basic Tensor Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#creating-tensors">Creating Tensors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#operations">Operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#automatic-differentiation">Automatic Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#training-a-neural-network">Training a Neural Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#save3-trust-framework">SAVE3 Trust Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#gpu-acceleration">GPU Acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cognitive-modules">Cognitive Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/tensor.html">Tensor Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor-core-tensor-module">Victor Core Tensor Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.data"><code class="docutils literal notranslate"><span class="pre">Tensor.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.grad"><code class="docutils literal notranslate"><span class="pre">Tensor.grad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.requires_grad"><code class="docutils literal notranslate"><span class="pre">Tensor.requires_grad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__init__"><code class="docutils literal notranslate"><span class="pre">Tensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.zero_grad"><code class="docutils literal notranslate"><span class="pre">Tensor.zero_grad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.detach"><code class="docutils literal notranslate"><span class="pre">Tensor.detach()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.numpy"><code class="docutils literal notranslate"><span class="pre">Tensor.numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.item"><code class="docutils literal notranslate"><span class="pre">Tensor.item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__add__"><code class="docutils literal notranslate"><span class="pre">Tensor.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__sub__"><code class="docutils literal notranslate"><span class="pre">Tensor.__sub__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__mul__"><code class="docutils literal notranslate"><span class="pre">Tensor.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__truediv__"><code class="docutils literal notranslate"><span class="pre">Tensor.__truediv__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__neg__"><code class="docutils literal notranslate"><span class="pre">Tensor.__neg__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__pow__"><code class="docutils literal notranslate"><span class="pre">Tensor.__pow__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.pow"><code class="docutils literal notranslate"><span class="pre">Tensor.pow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.matmul"><code class="docutils literal notranslate"><span class="pre">Tensor.matmul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.__matmul__"><code class="docutils literal notranslate"><span class="pre">Tensor.__matmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.sum"><code class="docutils literal notranslate"><span class="pre">Tensor.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.mean"><code class="docutils literal notranslate"><span class="pre">Tensor.mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.reshape"><code class="docutils literal notranslate"><span class="pre">Tensor.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.view"><code class="docutils literal notranslate"><span class="pre">Tensor.view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.transpose"><code class="docutils literal notranslate"><span class="pre">Tensor.transpose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.squeeze"><code class="docutils literal notranslate"><span class="pre">Tensor.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.clip"><code class="docutils literal notranslate"><span class="pre">Tensor.clip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.backward"><code class="docutils literal notranslate"><span class="pre">Tensor.backward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Tensor.jvp"><code class="docutils literal notranslate"><span class="pre">Tensor.jvp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.no_grad"><code class="docutils literal notranslate"><span class="pre">no_grad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.set_grad_enabled"><code class="docutils literal notranslate"><span class="pre">set_grad_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.grad_enabled"><code class="docutils literal notranslate"><span class="pre">grad_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Optimizer"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Optimizer.__init__"><code class="docutils literal notranslate"><span class="pre">Optimizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Optimizer.zero_grad"><code class="docutils literal notranslate"><span class="pre">Optimizer.zero_grad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Optimizer.step"><code class="docutils literal notranslate"><span class="pre">Optimizer.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.SGD"><code class="docutils literal notranslate"><span class="pre">SGD</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.SGD.__init__"><code class="docutils literal notranslate"><span class="pre">SGD.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.SGD.step"><code class="docutils literal notranslate"><span class="pre">SGD.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Adam"><code class="docutils literal notranslate"><span class="pre">Adam</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Adam.__init__"><code class="docutils literal notranslate"><span class="pre">Adam.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.Adam.step"><code class="docutils literal notranslate"><span class="pre">Adam.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.RMSprop"><code class="docutils literal notranslate"><span class="pre">RMSprop</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.RMSprop.__init__"><code class="docutils literal notranslate"><span class="pre">RMSprop.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#victor_core.tensor.RMSprop.step"><code class="docutils literal notranslate"><span class="pre">RMSprop.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.relu"><code class="docutils literal notranslate"><span class="pre">relu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.tanh"><code class="docutils literal notranslate"><span class="pre">tanh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.softmax"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.mse_loss"><code class="docutils literal notranslate"><span class="pre">mse_loss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.binary_cross_entropy"><code class="docutils literal notranslate"><span class="pre">binary_cross_entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#victor_core.tensor.cross_entropy"><code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#tensor-class">Tensor Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id0"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#activation-functions">Activation Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id29"><code class="docutils literal notranslate"><span class="pre">relu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id30"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id31"><code class="docutils literal notranslate"><span class="pre">tanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id32"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#loss-functions">Loss Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id33"><code class="docutils literal notranslate"><span class="pre">mse_loss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id34"><code class="docutils literal notranslate"><span class="pre">binary_cross_entropy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id35"><code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#optimizers">Optimizers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id36"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id40"><code class="docutils literal notranslate"><span class="pre">SGD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id43"><code class="docutils literal notranslate"><span class="pre">Adam</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id46"><code class="docutils literal notranslate"><span class="pre">RMSprop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/tensor.html#context-managers">Context Managers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id49"><code class="docutils literal notranslate"><span class="pre">no_grad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id50"><code class="docutils literal notranslate"><span class="pre">set_grad_enabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/tensor.html#id51"><code class="docutils literal notranslate"><span class="pre">grad_enabled()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/trust.html">Trust Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor-core-trust-module">Victor Core Trust Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.schema"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.schema_version"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.created_at"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.module_id"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.module_name"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.module_version"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.author"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.license"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.license</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.payload_type"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.payload"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.payload_sha256"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_sha256</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.signature_alg"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature_alg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.signature"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id0"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id1"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id2"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id3"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id4"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id5"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.module_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id6"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id7"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.license</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id8"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id9"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id10"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.payload_sha256</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id11"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature_alg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id12"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.signature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.finalize"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.finalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.verify"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.verify()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.to_dict"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.from_dict"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3Envelope.__init__"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.schema"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.schema_version"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.module_id"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.name"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.version"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.entrypoint"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.entrypoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.provides"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.provides</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.requires"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.requires_versions"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires_versions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.description"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.tags"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id13"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id14"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.schema_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id15"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id16"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id17"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id18"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.entrypoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id19"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.provides</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id20"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id21"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.requires_versions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id22"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id23"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.validate"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.validate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.SAVE3ModuleSpec.__init__"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext"><code class="docutils literal notranslate"><span class="pre">LegoContext</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext.__init__"><code class="docutils literal notranslate"><span class="pre">LegoContext.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext.provide"><code class="docutils literal notranslate"><span class="pre">LegoContext.provide()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext.require"><code class="docutils literal notranslate"><span class="pre">LegoContext.require()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext.has_capability"><code class="docutils literal notranslate"><span class="pre">LegoContext.has_capability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext.provider_spec"><code class="docutils literal notranslate"><span class="pre">LegoContext.provider_spec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.LegoContext.list_capabilities"><code class="docutils literal notranslate"><span class="pre">LegoContext.list_capabilities()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta.__init__"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta.record_success"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.record_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta.record_failure"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.record_failure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta.get_trust"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.get_trust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta.get_events"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.get_events()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustModelBeta.check_threshold"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta.check_threshold()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.discover_specs"><code class="docutils literal notranslate"><span class="pre">discover_specs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.resolve_init_order"><code class="docutils literal notranslate"><span class="pre">resolve_init_order()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.lego_build"><code class="docutils literal notranslate"><span class="pre">lego_build()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.wrap_spec"><code class="docutils literal notranslate"><span class="pre">wrap_spec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.Save3Error"><code class="docutils literal notranslate"><span class="pre">Save3Error</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.SpecError"><code class="docutils literal notranslate"><span class="pre">SpecError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.SignatureError"><code class="docutils literal notranslate"><span class="pre">SignatureError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.DependencyError"><code class="docutils literal notranslate"><span class="pre">DependencyError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#victor_core.trust.TrustError"><code class="docutils literal notranslate"><span class="pre">TrustError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#trust-model">Trust Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id24"><code class="docutils literal notranslate"><span class="pre">TrustModelBeta</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#save3-envelope">SAVE3 Envelope</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id31"><code class="docutils literal notranslate"><span class="pre">SAVE3Envelope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#module-specification">Module Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id63"><code class="docutils literal notranslate"><span class="pre">SAVE3ModuleSpec</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#service-registry">Service Registry</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id88"><code class="docutils literal notranslate"><span class="pre">LegoContext</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id95"><code class="docutils literal notranslate"><span class="pre">discover_specs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id96"><code class="docutils literal notranslate"><span class="pre">resolve_init_order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id97"><code class="docutils literal notranslate"><span class="pre">lego_build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id98"><code class="docutils literal notranslate"><span class="pre">wrap_spec()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/trust.html#exceptions">Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id99"><code class="docutils literal notranslate"><span class="pre">Save3Error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id100"><code class="docutils literal notranslate"><span class="pre">SpecError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id101"><code class="docutils literal notranslate"><span class="pre">SignatureError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id102"><code class="docutils literal notranslate"><span class="pre">DependencyError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/trust.html#id103"><code class="docutils literal notranslate"><span class="pre">TrustError</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/cognitive.html">Cognitive Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#victor-core-cognitive-modules">Victor Core Cognitive Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.__init__"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.add_fact"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.add_fact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.add_rule"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.add_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.has_fact"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.has_fact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.forward_chain"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.forward_chain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.deduce"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.deduce()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.clear"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.get_facts"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.get_facts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.ReasoningEngine.get_rules"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine.get_rules()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop.__init__"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop.monitor"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.monitor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop.adjust_strategy"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.adjust_strategy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop.reflect"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.reflect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop.get_current_strategy"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.get_current_strategy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.MetacognitiveLoop.get_performance_summary"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop.get_performance_summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.EmergenceSystem"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.EmergenceSystem.__init__"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.EmergenceSystem.observe"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.observe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.EmergenceSystem.detect_patterns"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.detect_patterns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.EmergenceSystem.get_complexity"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.get_complexity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#victor_core.cognitive.EmergenceSystem.clear"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem.clear()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#reasoning-engine">Reasoning Engine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#id0"><code class="docutils literal notranslate"><span class="pre">ReasoningEngine</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#metacognitive-loop">Metacognitive Loop</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#id10"><code class="docutils literal notranslate"><span class="pre">MetacognitiveLoop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/cognitive.html#emergence-system">Emergence System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/cognitive.html#id17"><code class="docutils literal notranslate"><span class="pre">EmergenceSystem</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/utils.html">Utilities Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor-core-utilities">Victor Core Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.setup_logger"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.Config.__init__"><code class="docutils literal notranslate"><span class="pre">Config.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.Config.get"><code class="docutils literal notranslate"><span class="pre">Config.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.Config.to_dict"><code class="docutils literal notranslate"><span class="pre">Config.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.Config.load"><code class="docutils literal notranslate"><span class="pre">Config.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager"><code class="docutils literal notranslate"><span class="pre">StateManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.__init__"><code class="docutils literal notranslate"><span class="pre">StateManager.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.set"><code class="docutils literal notranslate"><span class="pre">StateManager.set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.get"><code class="docutils literal notranslate"><span class="pre">StateManager.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.delete"><code class="docutils literal notranslate"><span class="pre">StateManager.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.checkpoint"><code class="docutils literal notranslate"><span class="pre">StateManager.checkpoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.rollback"><code class="docutils literal notranslate"><span class="pre">StateManager.rollback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.list_checkpoints"><code class="docutils literal notranslate"><span class="pre">StateManager.list_checkpoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.clear"><code class="docutils literal notranslate"><span class="pre">StateManager.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.save"><code class="docutils literal notranslate"><span class="pre">StateManager.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.StateManager.load"><code class="docutils literal notranslate"><span class="pre">StateManager.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.ensure_dir"><code class="docutils literal notranslate"><span class="pre">ensure_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.safe_save_json"><code class="docutils literal notranslate"><span class="pre">safe_save_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.load_json"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#victor_core.utils.Timer.__init__"><code class="docutils literal notranslate"><span class="pre">Timer.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.format_bytes"><code class="docutils literal notranslate"><span class="pre">format_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.format_number"><code class="docutils literal notranslate"><span class="pre">format_number()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#victor_core.utils.deprecated"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#logging">Logging</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id0"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#configuration">Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id1"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#state-management">State Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id7"><code class="docutils literal notranslate"><span class="pre">StateManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#file-i-o">File I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id18"><code class="docutils literal notranslate"><span class="pre">ensure_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id19"><code class="docutils literal notranslate"><span class="pre">safe_save_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id20"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id21"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id22"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#timing">Timing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id23"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#formatting">Formatting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id25"><code class="docutils literal notranslate"><span class="pre">format_bytes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id26"><code class="docutils literal notranslate"><span class="pre">format_number()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#deprecation">Deprecation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#id27"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#core-modules">Core Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guides/index.html#available-guides">Available Guides</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-architecture-overview">System Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-layers">Core Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-principles">Design Principles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modularity">Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zero-dependencies">Zero Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#production-ready">Production Ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extensibility">Extensibility</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-flow">Data Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#training-pipeline">Training Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trust-orchestration">Trust Orchestration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cognitive-processing">Cognitive Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#key-components">Key Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tensor-engine">Tensor Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#save3-framework">SAVE3 Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cognitive-architecture">Cognitive Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-characteristics">Performance Characteristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#time-complexity">Time Complexity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-usage">Memory Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scalability">Scalability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#security-model">Security Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#trust-framework">Trust Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#isolation">Isolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cryptography">Cryptography</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extension-points">Extension Points</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#custom-optimizers">Custom Optimizers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-backends">Custom Backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-cognitive-modules">Custom Cognitive Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#future-directions">Future Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#phase-2-current">Phase 2 (Current)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-3-planned">Phase 3 (Planned)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Victor AGI Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture-guide">
+<h1>Architecture Guide<a class="headerlink" href="#architecture-guide" title="Link to this heading"></a></h1>
+<section id="system-architecture-overview">
+<h2>System Architecture Overview<a class="headerlink" href="#system-architecture-overview" title="Link to this heading"></a></h2>
+<p>Victor AGI Core is built with a modular, layered architecture designed for
+production use, extensibility, and cognitive capabilities.</p>
+<img alt="Victor AGI Core Architecture" class="align-center" src="_static/architecture_diagram.png" />
+</section>
+<section id="core-layers">
+<h2>Core Layers<a class="headerlink" href="#core-layers" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Foundation Layer</strong> (<code class="docutils literal notranslate"><span class="pre">victor_core.tensor</span></code>)</p>
+<ul class="simple">
+<li><p>Automatic differentiation engine</p></li>
+<li><p>NumPy and GPU backends</p></li>
+<li><p>Optimizers and loss functions</p></li>
+<li><p>Model checkpointing</p></li>
+</ul>
+</li>
+<li><p><strong>Trust Layer</strong> (<code class="docutils literal notranslate"><span class="pre">victor_core.trust</span></code>)</p>
+<ul class="simple">
+<li><p>SAVE3 envelope system</p></li>
+<li><p>Time-decay trust scoring</p></li>
+<li><p>Module orchestration</p></li>
+<li><p>Dependency resolution</p></li>
+</ul>
+</li>
+<li><p><strong>Cognitive Layer</strong> (<code class="docutils literal notranslate"><span class="pre">victor_core.cognitive</span></code>)</p>
+<ul class="simple">
+<li><p>Reasoning engine</p></li>
+<li><p>Metacognitive loop</p></li>
+<li><p>Emergence detection</p></li>
+<li><p>Knowledge representation</p></li>
+</ul>
+</li>
+<li><p><strong>Utilities Layer</strong> (<code class="docutils literal notranslate"><span class="pre">victor_core.utils</span></code>)</p>
+<ul class="simple">
+<li><p>Logging infrastructure</p></li>
+<li><p>Configuration management</p></li>
+<li><p>State management</p></li>
+<li><p>File I/O helpers</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="design-principles">
+<h2>Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading"></a></h2>
+<section id="modularity">
+<h3>Modularity<a class="headerlink" href="#modularity" title="Link to this heading"></a></h3>
+<p>Each layer is independent and can be used standalone. Components
+communicate through well-defined interfaces.</p>
+</section>
+<section id="zero-dependencies">
+<h3>Zero Dependencies<a class="headerlink" href="#zero-dependencies" title="Link to this heading"></a></h3>
+<p>Core functionality requires only NumPy. Optional features (GPU,
+documentation) have isolated dependencies.</p>
+</section>
+<section id="production-ready">
+<h3>Production Ready<a class="headerlink" href="#production-ready" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Comprehensive test coverage (80+ tests)</p></li>
+<li><p>Type hints throughout</p></li>
+<li><p>Security scanning (CodeQL)</p></li>
+<li><p>Performance profiling hooks</p></li>
+</ul>
+</section>
+<section id="extensibility">
+<h3>Extensibility<a class="headerlink" href="#extensibility" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Plugin architecture for optimizers</p></li>
+<li><p>Modular cognitive components</p></li>
+<li><p>Custom backend support</p></li>
+</ul>
+</section>
+</section>
+<section id="data-flow">
+<h2>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h2>
+<section id="training-pipeline">
+<h3>Training Pipeline<a class="headerlink" href="#training-pipeline" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Data preparation (NumPy arrays)</p></li>
+<li><p>Model definition (Tensor operations)</p></li>
+<li><p>Forward pass (automatic graph construction)</p></li>
+<li><p>Loss computation</p></li>
+<li><p>Backward pass (gradient computation)</p></li>
+<li><p>Optimizer step (parameter update)</p></li>
+</ol>
+</section>
+<section id="trust-orchestration">
+<h3>Trust Orchestration<a class="headerlink" href="#trust-orchestration" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Module discovery (filesystem scan)</p></li>
+<li><p>Specification validation</p></li>
+<li><p>Dependency resolution (topological sort)</p></li>
+<li><p>Trust verification (HMAC signatures)</p></li>
+<li><p>Initialization (dependency order)</p></li>
+<li><p>Service registration</p></li>
+</ol>
+</section>
+<section id="cognitive-processing">
+<h3>Cognitive Processing<a class="headerlink" href="#cognitive-processing" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Input observation</p></li>
+<li><p>Reasoning (logical inference)</p></li>
+<li><p>Metacognitive monitoring</p></li>
+<li><p>Strategy adjustment</p></li>
+<li><p>Output generation</p></li>
+</ol>
+</section>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<section id="tensor-engine">
+<h3>Tensor Engine<a class="headerlink" href="#tensor-engine" title="Link to this heading"></a></h3>
+<p>The tensor engine provides automatic differentiation through computational
+graph construction and reverse-mode backpropagation.</p>
+<p><strong>Graph Construction:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># Creates computation node</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1"># Adds to graph</span>
+</pre></div>
+</div>
+<p><strong>Gradient Computation:</strong></p>
+<p>Uses topological sort to traverse graph in reverse order, applying
+chain rule to compute gradients.</p>
+</section>
+<section id="save3-framework">
+<h3>SAVE3 Framework<a class="headerlink" href="#save3-framework" title="Link to this heading"></a></h3>
+<p><strong>Trust Scoring:</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}score(t) = score_0 \\times 0.5^{t/t_{half}} + \\sum gains - \\sum penalties\end{split}\]</div>
+<p><strong>Module Dependencies:</strong></p>
+<p>Resolved using Kahn’s algorithm for topological sorting with cycle detection.</p>
+</section>
+<section id="cognitive-architecture">
+<h3>Cognitive Architecture<a class="headerlink" href="#cognitive-architecture" title="Link to this heading"></a></h3>
+<p><strong>Reasoning:</strong></p>
+<ul class="simple">
+<li><p>Forward chaining (data-driven)</p></li>
+<li><p>Backward chaining (goal-driven)</p></li>
+<li><p>Abductive reasoning</p></li>
+</ul>
+<p><strong>Metacognition:</strong></p>
+<ul class="simple">
+<li><p>Performance monitoring</p></li>
+<li><p>Strategy adaptation</p></li>
+<li><p>Confidence tracking</p></li>
+</ul>
+<p><strong>Emergence:</strong></p>
+<ul class="simple">
+<li><p>Pattern detection</p></li>
+<li><p>Synchronization analysis</p></li>
+<li><p>Phase transition identification</p></li>
+</ul>
+</section>
+</section>
+<section id="performance-characteristics">
+<h2>Performance Characteristics<a class="headerlink" href="#performance-characteristics" title="Link to this heading"></a></h2>
+<section id="time-complexity">
+<h3>Time Complexity<a class="headerlink" href="#time-complexity" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Tensor operations</strong>: O(n) for element-wise, O(n³) for matrix ops</p></li>
+<li><p><strong>Backward pass</strong>: O(E + V) where E = edges, V = vertices</p></li>
+<li><p><strong>Dependency resolution</strong>: O(V + E) topological sort</p></li>
+<li><p><strong>Trust decay</strong>: O(1) per update</p></li>
+</ul>
+</section>
+<section id="memory-usage">
+<h3>Memory Usage<a class="headerlink" href="#memory-usage" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Tensors</strong>: O(n) for data + O(n) for gradients (lazy allocation)</p></li>
+<li><p><strong>Computation graph</strong>: O(V) for nodes</p></li>
+<li><p><strong>Trust history</strong>: O(n) for n events (configurable)</p></li>
+</ul>
+</section>
+<section id="scalability">
+<h3>Scalability<a class="headerlink" href="#scalability" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>CPU</strong>: Single-threaded NumPy operations</p></li>
+<li><p><strong>GPU</strong>: CuPy backend for parallel computation</p></li>
+<li><p><strong>Distributed</strong>: Planned for Phase 3</p></li>
+</ul>
+</section>
+</section>
+<section id="security-model">
+<h2>Security Model<a class="headerlink" href="#security-model" title="Link to this heading"></a></h2>
+<section id="trust-framework">
+<h3>Trust Framework<a class="headerlink" href="#trust-framework" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>HMAC-SHA256</strong> for message integrity</p></li>
+<li><p><strong>Time-decay</strong> prevents stale trust scores</p></li>
+<li><p><strong>Cycle detection</strong> prevents dependency attacks</p></li>
+</ul>
+</section>
+<section id="isolation">
+<h3>Isolation<a class="headerlink" href="#isolation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>No network calls</strong> in core functionality</p></li>
+<li><p><strong>Sandboxed module loading</strong></p></li>
+<li><p><strong>Input validation</strong> throughout</p></li>
+</ul>
+</section>
+<section id="cryptography">
+<h3>Cryptography<a class="headerlink" href="#cryptography" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Standard library only (hashlib, hmac)</p></li>
+<li><p>Constant-time comparisons</p></li>
+<li><p>Secure random generation</p></li>
+</ul>
+</section>
+</section>
+<section id="extension-points">
+<h2>Extension Points<a class="headerlink" href="#extension-points" title="Link to this heading"></a></h2>
+<section id="custom-optimizers">
+<h3>Custom Optimizers<a class="headerlink" href="#custom-optimizers" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">victor_core.tensor</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+
+<span class="k">class</span> <span class="nc">CustomOptimizer</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Custom update logic</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-backends">
+<h3>Custom Backends<a class="headerlink" href="#custom-backends" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">victor_core.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="c1"># Register custom backend</span>
+<span class="n">Tensor</span><span class="o">.</span><span class="n">register_backend</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="n">custom_ops</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-cognitive-modules">
+<h3>Custom Cognitive Modules<a class="headerlink" href="#custom-cognitive-modules" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">victor_core.cognitive</span> <span class="kn">import</span> <span class="n">CognitiveModule</span>
+
+<span class="k">class</span> <span class="nc">MyModule</span><span class="p">(</span><span class="n">CognitiveModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="c1"># Custom cognitive processing</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="future-directions">
+<h2>Future Directions<a class="headerlink" href="#future-directions" title="Link to this heading"></a></h2>
+<section id="phase-2-current">
+<h3>Phase 2 (Current)<a class="headerlink" href="#phase-2-current" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>✅ Sphinx documentation</p></li>
+<li><p>✅ Cognitive modules</p></li>
+<li><p>🚧 GPU acceleration</p></li>
+<li><p>🚧 Extended optimizers</p></li>
+<li><p>🚧 Model zoo</p></li>
+</ul>
+</section>
+<section id="phase-3-planned">
+<h3>Phase 3 (Planned)<a class="headerlink" href="#phase-3-planned" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Distributed training</p></li>
+<li><p>Model serving API</p></li>
+<li><p>Advanced cognitive architectures</p></li>
+<li><p>External system integrations</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Goodfellow, I., et al. “Deep Learning” (2016)</p></li>
+<li><p>Russell, S., Norvig, P. “Artificial Intelligence: A Modern Approach” (2020)</p></li>
+<li><p>Schmidhuber, J. “Deep Learning in Neural Networks: An Overview” (2015)</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guides/index.html" class="btn btn-neutral float-left" title="Guides" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Brandon Emery x Victor.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

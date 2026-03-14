@@ -1,0 +1,97 @@
+# Victor Hub Configuration
+
+victor_hub:
+  version: "1.0.0"
+  mode: "development"  # development, production, autonomous
+  
+core:
+  # Core AGI settings
+  model_path: "models/victor_agi_latest.pt"  # Path to Victor AGI model
+  memory:
+    short_term_size: 10000
+    infinite_enabled: false  # Enable for unlimited context
+    infinite_path: "memory/infinite.db"
+  reasoning:
+    depth: "medium"  # shallow, medium, deep
+    timeout: 300  # seconds
+
+agents:
+  # Agent system configuration
+  max_concurrent: 100
+  spawn_strategy: "dynamic"  # dynamic or fixed
+  default_brain: "victor_llm"
+  agent_timeout: 600  # seconds
+
+skills:
+  # Skill discovery and management
+  auto_discover: true
+  discovery_paths:
+    - "victor_hub/skills"
+  enabled_skills:
+    - "echo"
+    - "content_generator"
+    - "research_agent"
+
+orchestration:
+  # Pipeline and workflow settings
+  max_pipeline_depth: 10
+  timeout: 3600  # 1 hour
+  retry_strategy: "exponential_backoff"
+  max_retries: 3
+
+io:
+  # Input/Output interfaces
+  cli:
+    enabled: true
+    prompt: "Victor> "
+  api:
+    enabled: false  # TODO: Implement FastAPI
+    host: "0.0.0.0"
+    port: 8000
+    cors: true
+
+scheduler:
+  # Task scheduling
+  enabled: false  # Enable for autonomous mode
+  check_interval: 60  # seconds
+  task_queue_path: "tasks/queue.json"
+
+monitoring:
+  # Logging and metrics
+  enabled: true
+  log_level: "INFO"
+  log_path: "logs/"
+  metrics_enabled: true
+  metrics_interval: 300  # seconds
+
+revenue_mode:
+  # Autonomous revenue generation
+  enabled: false  # DANGER: Only enable with supervision
+  strategies:
+    - "music_library"
+    - "content_service"
+  optimization_interval: 604800  # 1 week in seconds
+  max_daily_spend: 0  # Resource limit
+
+safety:
+  # Safety constraints
+  sandbox_skills: true
+  require_approval_for:
+    - "code_generation"
+    - "self_modification"
+    - "external_api_calls"
+  audit_trail: true
+  rollback_enabled: true
+
+visual_engine:
+  # Victor Visual Engine - Real-time 3D avatar interface
+  enabled: false  # Enable to activate visual presence
+  server:
+    host: "127.0.0.1"
+    port: 8765
+    auto_start: true  # Start WebSocket server with Victor Hub
+  demo_mode: false  # Run in demo mode (simulated updates)
+  default_emotion: "calm_focus"
+  default_energy: 0.5
+  godot_project_path: "visual_engine/godot_project"
+  auto_launch_godot: false  # Experimental: auto-launch Godot scene

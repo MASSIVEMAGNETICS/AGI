@@ -1,0 +1,15 @@
+<svg height="128" width="128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simple Victor icon placeholder -->
+  <rect width="128" height="128" fill="#0a0a0f"/>
+  <circle cx="64" cy="64" r="48" fill="none" stroke="#00cccc" stroke-width="4"/>
+  <circle cx="64" cy="64" r="36" fill="none" stroke="#00cccc" stroke-width="2" opacity="0.5"/>
+  <circle cx="50" cy="58" r="6" fill="#00cccc"/>
+  <circle cx="78" cy="58" r="6" fill="#00cccc"/>
+  <rect x="44" y="78" width="40" height="4" fill="#00cccc" opacity="0.7"/>
+  
+  <!-- Emissive glow effect -->
+  <circle cx="64" cy="64" r="54" fill="none" stroke="#00cccc" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Text -->
+  <text x="64" y="110" font-family="monospace" font-size="12" fill="#00cccc" text-anchor="middle">VICTOR</text>
+</svg>

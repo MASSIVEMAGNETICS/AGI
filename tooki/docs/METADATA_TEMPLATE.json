@@ -1,0 +1,92 @@
+{
+  "title": "Project Title",
+  "date": "YYYY-MM-DD",
+  "lastUpdated": "YYYY-MM-DD",
+  "authors": [
+    {
+      "name": "Author Name",
+      "role": "Researcher",
+      "email": "author@example.com",
+      "affiliation": "Organization"
+    }
+  ],
+  "category": "ai",
+  "subcategory": "machine-learning",
+  "tags": [
+    "tag1",
+    "tag2",
+    "tag3"
+  ],
+  "status": "completed",
+  "license": "MIT",
+  "description": "Brief one-paragraph description of the project",
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ],
+  "abstract": "Longer abstract describing the research in detail",
+  "objectives": [
+    "Primary objective",
+    "Secondary objective"
+  ],
+  "methodology": {
+    "approach": "Brief description of approach",
+    "tools": ["tool1", "tool2"],
+    "languages": ["python", "javascript"]
+  },
+  "datasets": [
+    {
+      "name": "Dataset Name",
+      "source": "URL or description",
+      "size": "100GB",
+      "description": "Dataset description"
+    }
+  ],
+  "results": {
+    "summary": "Brief summary of key results",
+    "metrics": {
+      "accuracy": 0.95,
+      "precision": 0.93,
+      "recall": 0.94
+    }
+  },
+  "publications": [
+    {
+      "title": "Paper Title",
+      "venue": "Conference/Journal Name",
+      "year": 2026,
+      "url": "https://arxiv.org/abs/...",
+      "doi": "10.xxxx/xxxxx"
+    }
+  ],
+  "related": [
+    "/research/ai/YYYY-MM-DD-related-project-1",
+    "/research/code/YYYY-MM-DD-related-project-2"
+  ],
+  "dependencies": {
+    "python": ">=3.8",
+    "pytorch": ">=1.10",
+    "transformers": ">=4.0"
+  },
+  "hardware": {
+    "gpu": "NVIDIA RTX 3090",
+    "memory": "32GB",
+    "compute": "100 GPU hours"
+  },
+  "reproducibility": {
+    "seed": 42,
+    "deterministic": true,
+    "instructions": "See README.md for setup instructions"
+  },
+  "links": {
+    "repository": "https://github.com/...",
+    "demo": "https://...",
+    "documentation": "https://..."
+  },
+  "funding": {
+    "source": "Funding Organization",
+    "grantNumber": "GRANT-12345"
+  },
+  "notes": "Additional notes or considerations"
+}

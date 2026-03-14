@@ -1,0 +1,238 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Victor Personal Runtime Configuration",
+  "description": "Configuration for the Victor Personal Runtime cross-platform assistant",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Configuration version",
+      "default": "1.0.0"
+    },
+    "user": {
+      "type": "object",
+      "description": "User identification",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique user identifier (auto-generated if not provided)"
+        },
+        "name": {
+          "type": "string",
+          "description": "User's display name"
+        }
+      }
+    },
+    "sync": {
+      "type": "object",
+      "description": "Cross-device sync settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable cross-device sync",
+          "default": true
+        },
+        "interval_seconds": {
+          "type": "integer",
+          "description": "Sync interval in seconds",
+          "default": 300,
+          "minimum": 60
+        },
+        "github_gist_id": {
+          "type": "string",
+          "description": "GitHub Gist ID for encrypted sync storage"
+        },
+        "encryption_enabled": {
+          "type": "boolean",
+          "description": "Encrypt sync data",
+          "default": true
+        }
+      }
+    },
+    "learning": {
+      "type": "object",
+      "description": "Personal learning engine settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable learning from user interactions",
+          "default": true
+        },
+        "local_only": {
+          "type": "boolean",
+          "description": "Keep all learning data local to device",
+          "default": true
+        },
+        "model_sync": {
+          "type": "boolean",
+          "description": "Sync learned models across devices",
+          "default": false
+        },
+        "retention_days": {
+          "type": "integer",
+          "description": "How long to retain learning data",
+          "default": 90,
+          "minimum": 1
+        }
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "description": "Overlay assistant settings (Windows/Android only)",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable floating overlay assistant",
+          "default": false
+        },
+        "opacity": {
+          "type": "number",
+          "description": "Overlay opacity (0.0-1.0)",
+          "default": 0.9,
+          "minimum": 0.1,
+          "maximum": 1.0
+        },
+        "position": {
+          "type": "string",
+          "description": "Overlay position",
+          "enum": ["top_left", "top_right", "bottom_left", "bottom_right", "center"],
+          "default": "bottom_right"
+        },
+        "size": {
+          "type": "string",
+          "description": "Overlay size",
+          "enum": ["small", "medium", "large"],
+          "default": "medium"
+        }
+      }
+    },
+    "automation": {
+      "type": "object",
+      "description": "Task automation settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable task automation",
+          "default": false
+        },
+        "require_confirmation": {
+          "type": "boolean",
+          "description": "Always ask before performing automated actions",
+          "default": true
+        },
+        "allowed_apps": {
+          "type": "array",
+          "description": "Apps that automation is allowed to interact with",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "description": "Privacy settings",
+      "properties": {
+        "telemetry": {
+          "type": "boolean",
+          "description": "Send anonymous usage telemetry",
+          "default": false
+        },
+        "crash_reports": {
+          "type": "boolean",
+          "description": "Send crash reports",
+          "default": false
+        },
+        "usage_analytics": {
+          "type": "boolean",
+          "description": "Enable usage analytics",
+          "default": false
+        }
+      }
+    },
+    "mesh": {
+      "type": "object",
+      "description": "Cross-device mesh network settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable mesh networking",
+          "default": true
+        },
+        "discovery_port": {
+          "type": "integer",
+          "description": "Port for device discovery",
+          "default": 8898
+        },
+        "mesh_port": {
+          "type": "integer",
+          "description": "Port for mesh communication",
+          "default": 8899
+        },
+        "auto_connect": {
+          "type": "boolean",
+          "description": "Automatically connect to discovered devices",
+          "default": true
+        }
+      }
+    },
+    "notifications": {
+      "type": "object",
+      "description": "Notification settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable notifications",
+          "default": true
+        },
+        "sound": {
+          "type": "boolean",
+          "description": "Play notification sounds",
+          "default": true
+        },
+        "categories": {
+          "type": "object",
+          "description": "Enable/disable notification categories",
+          "properties": {
+            "alerts": {
+              "type": "boolean",
+              "default": true
+            },
+            "suggestions": {
+              "type": "boolean",
+              "default": true
+            },
+            "sync": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "description": "User interface settings",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "description": "UI theme",
+          "enum": ["light", "dark", "system"],
+          "default": "system"
+        },
+        "language": {
+          "type": "string",
+          "description": "UI language",
+          "default": "en"
+        },
+        "font_size": {
+          "type": "string",
+          "description": "Font size",
+          "enum": ["small", "medium", "large"],
+          "default": "medium"
+        }
+      }
+    }
+  }
+}
